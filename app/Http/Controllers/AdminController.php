@@ -7,6 +7,6 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function dashboard(){
-        return 'Permitted!';
+        return view('backend.admin.dashboard');
     }
 }

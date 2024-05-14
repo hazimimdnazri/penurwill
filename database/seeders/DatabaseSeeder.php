@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'ADMIN',
                 'email' => 'admin@mail.com',
-                'role' => 4,
+                'role' => 3,
                 'date_verified' => date('Y-m-d H:i:s'),
                 'date_password' => date('Y-m-d H:i:s'),
             ],

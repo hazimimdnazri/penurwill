@@ -11,6 +11,18 @@ class GuestController extends Controller
         return view('frontend.home');
     }
 
+    public function home(){
+        if(auth()->user()){
+            if(in_array(auth()->user()->role, [2, 3])){
+                return redirect('admin/dashboard');
+            } else if(auth()->user()->role == 1) {
+                return redirect('dashboard');
+            }
+        } else {
+            return redirect('admin/dashboard');
+        }
+    }
+
     public function contactUs(){
         return view('frontend.contact');
     }
