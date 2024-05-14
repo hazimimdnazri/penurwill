@@ -1,0 +1,297 @@
+/************************ Default CSS ***************************/
+::selection {
+    color: #fff;
+}
+::-moz-selection {
+    color: #fff;
+}
+::selection {
+    background-color: #CA9A67;
+}
+::-moz-selection {
+    background-color: #CA9A67;
+}
+.over-hide{
+  overflow: hidden;
+}
+
+/************************ Animation CSS ***************************/
+@keyframes shutters {
+  0% {
+    clip-path: polygon(0% 0%, 20% 0%, 20% 100%, 20% 100%, 20% 0%, 40% 0%, 40% 100%, 40% 100%, 40% 0%, 60% 0%, 60% 100%, 60% 100%, 60% 0%, 80% 0%, 80% 100%, 80% 100%, 80% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+100% {
+    clip-path: polygon(20% 0%, 20% 0%, 20% 100%, 40% 100%, 40% 0%, 40% 0%, 40% 100%, 60% 100%, 60% 0%, 60% 0%, 60% 100%, 80% 100%, 80% 0%, 80% 0%, 80% 100%, 100% 100%, 100% 0%, 100% 0%, 100% 100%, 20% 100%);
+}
+}
+@keyframes rotate {
+  0% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+     border-radius: 100% 45% 65% 100% / 95% 85% 40% 40%;  }
+     25% { clip-path: polygon(87.5% 12.5%, 87.5% 87.5%, 12.5% 87.5%, 12.5% 12.5%); }
+     50% { clip-path: polygon(75% 75%, 25% 75%, 25% 25%, 75% 25%); }
+     75% { clip-path: polygon(37.5% 62.5%, 37.5% 37.5%, 62.5% 37.5%, 62.5% 62.5%); }
+     100% { clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%); }
+ }
+ @keyframes circle {
+  0% { clip-path: circle(75%); }
+  50% { clip-path: circle(25%); }
+  100% { clip-path: circle(75%); }
+}
+@keyframes color-shape-movement {
+  0% { clip-path: polygon(0 0, 50% 0, 100% 0, 100% 50%, 100% 100%, 50% 100%, 0 100%, 0 50%); }
+  100% { clip-path:  polygon(50% 50%, 50% 25%, 50% 50%, 75% 50%, 50% 50%, 50% 75%, 50% 50%, 25% 50%); }
+}
+@keyframes rotate {
+  0% { clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); }
+  25% { clip-path: polygon(87.5% 12.5%, 87.5% 87.5%, 12.5% 87.5%, 12.5% 12.5%); }
+  50% { clip-path: polygon(75% 75%, 25% 75%, 25% 25%, 75% 25%); }
+  75% { clip-path: polygon(37.5% 62.5%, 37.5% 37.5%, 62.5% 37.5%, 62.5% 62.5%); }
+  100% { clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%); }
+}
+@keyframes slots {
+  0% {
+    clip-path: polygon(0% 0%, 14% 0%, 14% 0%, 28% 0%, 28% 0%, 42% 0%, 42% 0%, 56% 0%, 56% 0%, 70% 0%, 70% 0%, 84% 0%, 84% 0%, 100% 0, 100% 100%, 0% 100%);
+}
+50% {
+    clip-path: polygon(0% 0%, 14% 0%, 14% 100%, 28% 100%, 28% 0%, 42% 0%, 42% 100%, 56% 100%, 56% 0%, 70% 0%, 70% 100%, 84% 100%, 84% 0%, 100% 0, 100% 100%, 0% 100%);
+}
+100% {
+    clip-path: polygon(0% 100%, 14% 100%, 14% 100%, 28% 100%, 28% 100%, 42% 100%, 42% 100%, 56% 100%, 56% 100%, 70% 100%, 70% 100%, 84% 100%, 84% 100%, 100% 100%, 100% 100%, 0% 100%);
+}
+}
+@keyframes morph {
+   0% {
+       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+   }
+   50% {
+       border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+   }
+   100% {
+       border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+   }
+}
+/************************ Cursor CSS ***************************/
+.cursor {
+    --size: 8px;
+    height: var(--size);
+    width:  var(--size);
+    border-radius: 50%;
+    position: absolute;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+.cursor.cursor-shadow {
+    background-color: transparent;
+    border: 1px solid #CA9A67;
+    --size: 40px;
+    transition: top .2s, left .2s,
+    width .2s, height .2s,
+    background-color .2s, border-color 0.2s;
+    transition-timing-function: ease-out;
+}
+.cursor.cursor-dot {
+    background: #CA9A67;
+    transition: width .2s, height .2s;
+}
+.cursor-shadow.active {
+    --size: 80px;
+    border-color: rgba(255,255,255, 0);
+    background-color: rgba(255,255,255,.1);
+}
+.cursor-dot.active {
+    --size: 0;
+}
+
+/************************ Blog post CSS ***************************/
+.blog-post-box{
+    position: relative;  
+    display: inline-block;
+    cursor: pointer;
+}
+.blog-post-box h5{
+    position: relative;  
+    text-transform: none;
+    cursor: pointer;
+    mix-blend-mode: difference;
+    z-index: 3;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear; 
+}
+.blog-post-box p{
+    position: relative;    
+    cursor: pointer;  
+    display: inline-block;
+    mix-blend-mode: luminosity;  
+    z-index: 4;
+}
+
+/************************ Blog cursor images CSS ***************************/
+.cursor.cursor-dot.active-blog-post-1{
+    opacity: 0;
+}
+.cursor-shadow.active-blog-post-1 {
+    --size: 160px;
+    border-color: rgba(255,255,255, 0) !important;
+    border-width: 0;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+}
+.cursor-shadow.active-blog-post-2 {
+    background-image: url(../images/offer/hover-img-2.png);
+    border-radius: unset;
+    width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;
+}
+.cursor-shadow.active-blog-post-3 {
+    background-image: url(../images/offer/hover-img-3.png);
+    border-radius: unset;
+   width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;
+}
+.cursor-shadow.active-blog-post-4 {
+    background-image: url(../images/offer/hover-img-1.png);
+    border-radius: unset;
+     width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;
+}
+.cursor-shadow.active-blog-post-5 {
+    background-image: url(../images/offer/hover-img-4.png);
+    border-radius: unset;
+    width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;
+}
+.cursor-shadow.active-blog-post-6 {
+    background-image: url(../images/offer/hover-img-5.png);
+    border-radius: unset;
+     width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;
+}
+.cursor-shadow.active-blog-post-7 {
+    background-image: url(../images/offer/hover-img-6.png);
+    border-radius: unset;
+     width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;
+}
+.cursor-shadow.active-blog-post-8 {
+    background-image: url(../images/offer/Hover2019.png);
+    border-radius: unset;
+    width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+}
+.cursor-shadow.active-blog-post-9 {
+    background-image: url(../images/offer/Hover2018.png);
+    border-radius: unset;
+    width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+}
+.cursor-shadow.active-blog-post-10 {
+    background-image: url(../images/offer/Hover2020.png);
+    border-radius: unset;
+     width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+}
+.cursor-shadow.active-blog-post-11 {
+    background-image: url(../images/offer/Hover2021.png);
+    border-radius: unset;
+     width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+}
+.cursor-shadow.active-blog-post-12 {
+    background-image: url(../images/offer/Hover2022.png);
+    border-radius: unset;
+    width: 300px;
+    height: 300px;
+    border-color: transparent !important;
+}
+.cursor-shadow.active-blog-post-13 {
+    background-image: url(../images/cases/cases-hover-1.png);
+    border-radius: 100% 45% 65% 100% / 95% 85% 40% 40%; 
+    border-radius: unset;
+    width: 420px;
+    height: 445px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;
+    animation: morph 8s ease-in-out infinite 1s;
+    animation-duration: 5s;
+    animation-iteration-count: 3; 
+}
+.cursor-shadow.active-blog-post-14 {
+    background-image: url(../images/cases/cases-hover-2.jpg);
+    border-radius: 100% 45% 65% 100% / 95% 85% 40% 40%; 
+    width: 370px;
+    height: 410px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;  
+    animation: shutters 3s infinite; 
+    animation-duration: 5s;
+    animation-iteration-count: 3;   
+}
+.cursor-shadow.active-blog-post-15 {
+    background-image: url(../images/cases/cases-hover-3.jpg);
+    border-radius: 100% 45% 65% 100% / 95% 85% 40% 40%; 
+    width: 370px;
+    height: 410px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;  
+    animation: rotate 3s infinite; 
+    animation-duration: 5s;
+    animation-iteration-count: 3; 
+}
+.cursor-shadow.active-blog-post-16 {
+    background-image: url(../images/cases/cases-hover-4.jpg);
+    border-radius: 100% 45% 65% 100% / 95% 85% 40% 40%; 
+    width: 370px;
+    height: 410px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;   
+    animation: circle 3s infinite; 
+    animation-duration: 5s;
+    animation-iteration-count: 3; 
+}
+.cursor-shadow.active-blog-post-17 {
+    background-image: url(../images/cases/cases-hover-5.jpg);
+    width: 370px;
+    height: 410px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;   
+    animation-name: color-shape-movement;
+    animation-duration: 5s;
+    animation-iteration-count: 3; 
+    clip-path: circle(100%);
+    border-radius: 100% 45% 65% 100% / 95% 85% 40% 40%; 
+}
+.cursor-shadow.active-blog-post-18 {
+    background-image: url(../images/cases/cases-hover-6.jpg);
+    border-radius: 100% 45% 65% 100% / 95% 85% 40% 40%; 
+    width: 370px;
+    height: 410px;
+    border-color: transparent !important;
+    background-repeat: no-repeat;  
+    animation: 1s slots reverse;
+    animation: 1s slots;
+    animation-duration: 5s;
+    animation-iteration-count: 3; 
+}
+.post-wrap a:hover{
+    color: currentColor;
+}
