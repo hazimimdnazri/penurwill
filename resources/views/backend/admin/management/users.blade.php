@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="d-flex flex-row align-items-center">
-                            <button type="button" onClick="modalAdmin()" class="btn btn-success disabled">Add User</button>
+                            <button type="button" onClick="modalUser()" class="btn btn-success">Add User</button>
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -126,7 +126,7 @@
                         <a class="dropdown-item" onClick="modalUser(${row.id})" href="#">Edit</a>
                         <a class="dropdown-item text-warning" onClick="resetPassword(${row.id})" href="javascript:void(0)">Reset Password</a>
                         ${row.isLocked == 1 ? `<a class="dropdown-item text-success" onClick="actionUser(${row.id}, 1)" href="#">Activate</a>` : `<a class="dropdown-item text-danger" onClick="actionUser(${row.id}, 0)" href="#">Deactivate</a>`}
-                        ${[1, 2].includes(row.role) ? `<a class="dropdown-item text-info" onClick="modalAccess(${row.id}, 1)" href="#">Modify Access</a>` : ``}
+                        ${[1, 2].includes(row.role) ? `<a class="dropdown-item text-info disabled" onClick="modalAccess(${row.id}, 1)" href="#">Modify Access</a>` : ``}
                         </div>
                     </div>
                     `

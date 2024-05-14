@@ -1,21 +1,25 @@
 <div class="modal fade" id="modal-user" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0">
-            <div class="modal-header">
-                <h5 class="modal-title">User Information</h5>
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white">User Information</h5>
             </div>
             <div class="modal-body">
                 <form id="userData" class="row g-3">
                     @csrf
                     <div class="col-md-12 needs-validation">
                         <label class="form-label">User Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" value="{{ $user->name }}" disabled>
+                        <input type="text" name="name" style="text-transform: uppercase" class="form-control" value="{{ $user->name }}">
+                    </div>
+                    <div class="col-md-12 needs-validation">
+                        <label class="form-label">User E-Mail <span class="text-danger">*</span></label>
+                        <input type="text" name="email" style="text-transform: lowercase" class="form-control" value="{{ $user->email }}">
                     </div>
                     <div class="col-md-12 needs-validation">
                         <label class="form-label">User Role <span class="text-danger">*</span></label>
                         <select name="role" class="form-select" required>
                             <option value="1" {{ $user->role == 1 ? 'selected' : NULL }}>User</option>
-                            <option value="2" {{ $user->role == 2 ? 'selected' : NULL }}>Admin</option>
+                            <option value="2" {{ $user->role == 2 ? 'selected' : NULL }} disabled>Admin</option>
                             <option value="3" {{ $user->role == 3 ? 'selected' : NULL }}>Superadmin</option>
                         </select>
                     </div>
@@ -36,15 +40,7 @@
         var formData = new FormData($('#userData')[0]);
 
         if ($('#userData')[0].checkValidity() === true) {
-            Swal.fire({
-                title: 'Saving...',
-                html: 'Please wait for a moment...',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                didOpen: () => {
-                    Swal.showLoading()
-                }
-            })
+            runLoader('save')
 
             $.ajax({
                 url: "{{ url('admin/management/ajax/store-user') }}",
@@ -54,34 +50,10 @@
                 contentType: false,
                 processData: false
             }).done((response) => {
-                if(response == 'success'){
-                    Swal.fire({
-                        title: "Success!",
-                        text: "User information has been saved successfully!",
-                        icon: "success",
-                        allowOutsideClick: false,
-                        allowEscapeKey: false,
-                    })
-                    .then((result) => {
-                        if(result.value){
-                            Swal.fire({
-                                title: 'Loading...',
-                                html: 'Please wait for a moment...',
-                                allowOutsideClick: false,
-                                allowEscapeKey: false,
-                                didOpen: () => {
-                                    Swal.showLoading()
-                                }
-                            })
-                            location.reload()
-                        }
-                    })
+                if(response.status == 'success'){
+                    runSuccess(response.message)
                 } else {
-                    Swal.fire(
-                        'Error!',
-                        response.message,
-                        response.status
-                    )
+                    runAlertError(response.message)
                 }
             });
         } else {

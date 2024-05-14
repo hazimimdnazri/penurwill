@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth', 'role: 3, 4'], 'prefix' => 'admin'], func
             Route::post('modal-user', [ManagementController::class, 'modalUser']);
             Route::post('store-user', [ManagementController::class, 'storeUser']);
             Route::post('action-user', [ManagementController::class, 'actionUser']);
+            Route::post('reset-password', [ManagementController::class, 'resetPassword']);
         });
     });
 });
