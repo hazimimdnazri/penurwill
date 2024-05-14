@@ -32,9 +32,15 @@
                             </ul>
                         </div>          
                         <div class="button-box">
+                            @if(auth()->user())
+                            <a href="{{ url('admin/dashboard') }}" class="button-wrap heder-btn">
+                                <span>Dashboard <i class="ri-arrow-right-line"></i></span>
+                            </a>
+                            @else
                             <a href="{{ url('guest/login') }}" class="button-wrap heder-btn">
                                 <span>Client Login <i class="ri-arrow-right-line"></i></span>
                             </a>
+                            @endif
                         </div>
                     </nav>
                 </div>
