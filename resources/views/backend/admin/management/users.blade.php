@@ -125,7 +125,7 @@
                         <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item" onClick="modalUser(${row.id})" href="#">Edit</a>
                         <a class="dropdown-item text-warning" onClick="resetPassword(${row.id})" href="javascript:void(0)">Reset Password</a>
-                        ${row.isLocked == 1 ? `<a class="dropdown-item text-success" onClick="actionUser(${row.id}, 1)" href="#">Activate</a>` : `<a class="dropdown-item text-danger" onClick="actionUser(${row.id}, 0)" href="#">Deactivate</a>`}
+                        ${row.date_verified == null ? `<a class="dropdown-item text-success" onClick="actionUser(${row.id}, 1)" href="#">Activate</a>` : `<a class="dropdown-item text-danger" onClick="actionUser(${row.id}, 0)" href="#">Deactivate</a>`}
                         ${[1, 2].includes(row.role) ? `<a class="dropdown-item text-info disabled" onClick="modalAccess(${row.id}, 1)" href="#">Modify Access</a>` : ``}
                         </div>
                     </div>

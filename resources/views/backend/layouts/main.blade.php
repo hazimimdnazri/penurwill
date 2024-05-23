@@ -62,23 +62,6 @@
 			@endif
 		})
 
-		@if(Auth::user()->role == 1)
-		modalDetails = (id) => {
-			
-			$.ajax({
-				type:"POST",
-				url: `{{ url('ajax/modal-details') }}`,
-				data: {
-					'_token': '{{ csrf_token() }}',
-					'id' : id
-				}
-			}).done((response) => {
-				$("#variable_main").html(response)
-				$('#modal-details').modal('show')
-			});
-		}
-		@endif
-
 		@if(in_array(Auth::user()->role, [1, 2, 3]))
 		modalPassword = (id) => {
 			runLoader('load')

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagementController;
 
@@ -24,6 +25,13 @@ Route::get('logout', [GuestController::class, 'submitLogout'])->name('logout')->
 Route::group(['middleware' => ['guest'], 'prefix' => 'guest'], function(){
     Route::get('login', [GuestController::class, 'login'])->name('login');
     Route::post('login', [GuestController::class, 'submitLogin']);
+    Route::get('register', [GuestController::class, 'register']);
+    Route::post('register', [GuestController::class, 'submitRegister']);
+
+    Route::group(['prefix' => 'ajax'], function(){
+        Route::post('modal-password-registration', [GuestController::class, 'modalPasswordRegistration']);
+        Route::post('store-registration', [GuestController::class, 'storeRegistration']);
+    });
 });
 
 Route::group(['middleware' => ['auth', 'role: 3, 4'], 'prefix' => 'admin'], function(){
@@ -40,4 +48,13 @@ Route::group(['middleware' => ['auth', 'role: 3, 4'], 'prefix' => 'admin'], func
             Route::post('reset-password', [ManagementController::class, 'resetPassword']);
         });
     });
+});
+
+Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], function(){
+    Route::get('dashboard', [UserController::class, 'dashboard']);
+});
+
+Route::group(['prefix' => 'ajax'], function(){
+    Route::post('modal-password', [ManagementController::class, 'modalPassword']);
+    Route::post('store-password', [ManagementController::class, 'storePassword']);
 });

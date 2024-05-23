@@ -1,7 +1,7 @@
 <nav class="sidebar">
 	<div class="sidebar-header">
 		<a href="{{ url('/') }}" class="sidebar-brand text-center mt-1 me-4">
-			<img src="{{ asset('assets/images/logo.png') }}" width="60%">
+			<img src="{{ asset('assets/frontend/images/brand/logo.png') }}" width="40%">
 		</a>
 		<div class="sidebar-toggler not-active">
 			<span></span>
@@ -13,21 +13,9 @@
 		<ul class="nav">
 			<li class="nav-item nav-category">Main Menu</li>
 			<li class="nav-item my-1">
-				<a href="{{ url('counselor/dashboard') }}" class="nav-link">
+				<a href="{{ url('client/dashboard') }}" class="nav-link">
 					<i class="link-icon" data-feather="home"></i>
 					<span class="link-title">Dashboard</span>
-				</a>
-			</li>
-			<li class="nav-item my-1">
-				<a href="{{ url('counselor/leads') }}" class="nav-link">
-					<i class="link-icon" data-feather="users"></i>
-					<span class="link-title">Leads</span>
-				</a>
-			</li>
-			<li class="nav-item my-1">
-				<a href="{{ url('counselor/calendar') }}" class="nav-link">
-					<i class="link-icon" data-feather="calendar"></i>
-					<span class="link-title">Appointments</span>
 				</a>
 			</li>
 			<li class="nav-item nav-category">Management</li>

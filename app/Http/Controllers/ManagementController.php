@@ -62,11 +62,50 @@ class ManagementController extends Controller
     public function actionUser(Request $request){
         $user = User::findorfail($request->id);
         $user->isLocked = $request->aid == 0 ? TRUE : FALSE;
+        $user->date_verified = date('Y-m-d H:i:s');
 
         if($user->save()){
             return [
                 'status' => 'success',
-                'message' => $request->aid == 0 ? 'The account has been locked.' : 'The account has been unlocked.'
+                'message' => $request->aid == 0 ? 'The account has been deactivated.' : 'The account has been activated.'
+            ];
+        }
+    }
+
+    public function modalPassword(Request $request){
+        return view('backend.user.components.modal-password');
+    }
+
+    public function storePassword(Request $request){
+        $user = User::findorfail(auth()->user()->id);
+
+        if(Hash::check($request->password, $user->password)){
+            if($request->password_new >= 8){
+                if($request->password_new == $request->password_confirmation){
+                    $user->password = Hash::make($request->password_confirmation);
+                    $user->date_password = date('Y-m-d H:i:s');
+                    if($user->save()){
+                        return [
+                            'message' => 'New password has been set, please relogin.',
+                            'status' => 'success'
+                        ];
+                    }
+                } else {
+                    return [
+                        'message' => 'Your confirmed password is not the same as your new password. ',
+                        'status' => 'error'
+                    ];
+                }
+            } else {
+                return [
+                    'message' => 'Please ensure that your password contains at least 8 characters.',
+                    'status' => 'error'
+                ];
+            }
+        } else {
+            return [
+                'message' => 'Your password is wrong.',
+                'status' => 'error'
             ];
         }
     }

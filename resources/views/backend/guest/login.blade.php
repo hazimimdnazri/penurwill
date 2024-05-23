@@ -57,7 +57,8 @@
                                             <div class="text-center">
                                             <button type="submit" class="btn btn-primary text-white me-2">Sign In</button>
 											<button type="button" class="btn btn-outline-danger">Forgot Password</button>
-                                            <p class="mt-3 text-secondary">©{{date('Y')}} Penurwill System</p>
+                                            <p class="mt-3 text-dark">Don't have an account? <a href="{{ url('guest/register') }}">Click here</a> to register.</p>
+                                            <p class="mt-2 text-secondary">©{{date('Y')}} Penurwill System</p>
                                             </div>
 										</form>
 									</div>

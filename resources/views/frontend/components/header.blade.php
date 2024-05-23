@@ -33,7 +33,7 @@
                         </div>          
                         <div class="button-box">
                             @if(auth()->user())
-                            <a href="{{ url('admin/dashboard') }}" class="button-wrap heder-btn">
+                            <a href="{{ in_array(auth()->user()->role, [2, 3]) ? url('admin/dashboard') : url('client/dashboard') }}" class="button-wrap heder-btn">
                                 <span>Dashboard <i class="ri-arrow-right-line"></i></span>
                             </a>
                             @else
