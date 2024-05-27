@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
 
         Route::group(['prefix' => 'ajax'], function(){
             Route::post('modal-create', [WillController::class, 'modalCreate']);
+            Route::post('load-tab', [WillController::class, 'loadTab']);
         });
     });
 });
