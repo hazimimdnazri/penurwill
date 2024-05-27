@@ -5,6 +5,8 @@ use App\Http\Controllers\GuestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\WillController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,15 @@ Route::group(['middleware' => ['auth', 'role: 3, 4'], 'prefix' => 'admin'], func
 
 Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], function(){
     Route::get('dashboard', [UserController::class, 'dashboard']);
+
+    Route::group(['prefix' => 'my-will'], function(){
+        Route::get('/', [WillController::class, 'myWill']);
+        Route::get('{id}', [WillController::class, 'willDetails']);
+
+        Route::group(['prefix' => 'ajax'], function(){
+            Route::post('modal-create', [WillController::class, 'modalCreate']);
+        });
+    });
 });
 
 Route::group(['prefix' => 'ajax'], function(){
@@ -59,4 +70,8 @@ Route::group(['prefix' => 'ajax'], function(){
     Route::post('store-details', [UserController::class, 'storeDetails']);
     Route::post('modal-password', [ManagementController::class, 'modalPassword']);
     Route::post('store-password', [ManagementController::class, 'storePassword']);
+});
+
+Route::group(['prefix' => 'gateway'], function(){
+    Route::get('pay', [TransactionController::class, 'gatewayPayment'])->middleware('auth');
 });
