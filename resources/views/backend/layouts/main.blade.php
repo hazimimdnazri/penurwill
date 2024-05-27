@@ -59,10 +59,12 @@
 		$(() => {
 			@if(Session::has('new_password'))
 				modalPassword()
+			@elseif(Session::has('need_details'))
+				modalDetails()
 			@endif
 		})
 
-		@if(in_array(Auth::user()->role, [1, 2, 3]))
+		@if(in_array(auth()->user()->role, [1, 2, 3]))
 		modalPassword = (id) => {
 			runLoader('load')
 			
@@ -77,6 +79,23 @@
 				$("#variable_main").html(response)
 				$('#modal-password').modal('show')
 				closeLoader()
+			});
+		}
+		@endif
+
+		@if(auth()->user()->role == 1)
+		modalDetails = (id) => {
+			
+			$.ajax({
+				type:"POST",
+				url: `{{ url('ajax/modal-details') }}`,
+				data: {
+					'_token': '{{ csrf_token() }}',
+					'id' : id
+				}
+			}).done((response) => {
+				$("#variable_main").html(response)
+				$('#modal-details').modal('show')
 			});
 		}
 		@endif

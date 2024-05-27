@@ -55,6 +55,8 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
 });
 
 Route::group(['prefix' => 'ajax'], function(){
+    Route::post('modal-details', [UserController::class, 'modalDetails']);
+    Route::post('store-details', [UserController::class, 'storeDetails']);
     Route::post('modal-password', [ManagementController::class, 'modalPassword']);
     Route::post('store-password', [ManagementController::class, 'storePassword']);
 });
