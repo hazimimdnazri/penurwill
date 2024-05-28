@@ -151,6 +151,12 @@
 <div id="variable_2"></div>
 
 <script>
+    $(() => {
+        $('.select2').select2({
+            width: '100%',
+        });
+    })
+
     dt = $("#tableFamily").DataTable({
         bLengthChange: false,
         bFilter: false,

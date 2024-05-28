@@ -155,18 +155,9 @@
 <div id="variable_2"></div>
 
 <script>
-    bt = $("#tableBank").DataTable({
-        bLengthChange: false,
-        bFilter: false,
-    })
-
-    it = $("#tableInvestment").DataTable({
-        bLengthChange: false,
-        bFilter: false,
-    })
-
-    pt = $("#tableDebt").DataTable({
-        bLengthChange: false,
-        bFilter: false,
+    $(() => {
+        $('.select2').select2({
+            width: '100%',
+        });
     })
 </script>
