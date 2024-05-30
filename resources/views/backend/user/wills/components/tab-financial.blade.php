@@ -2,9 +2,7 @@
     <div class="col-md-12 grid-margin stretch-card">
         <div class="card border-top border-0 border-4 border-secondary">
             <div class="card-body">
-                <form id="leadData" class="row mt-2">
-                    @csrf
-
+                <div class="row mt-2">
                     <div class="col-md-12 grid-margin stretch-card mb-3">
                         <div class="card">
                             <div class="card-body">
@@ -15,7 +13,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Bank Account</button>
+                                        <button type="button" id="banking" onClick="modalFinancial(this.id)" class="btn btn-xs btn-success">Add Bank Account</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -47,7 +45,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Investment</button>
+                                        <button type="button" id="investment" onClick="modalFinancial(this.id)" class="btn btn-xs btn-success">Add Investment</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -75,23 +73,22 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex flex-row-fluid">
                                         <div>
-                                            <h6 class="card-title">Debts & Liabilities Information</h6>
+                                            <h6 class="card-title">Business Interest Information</h6>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Debts & Liabilities</button>
+                                        <button type="button" id="business" onClick="modalFinancial(this.id)" class="btn btn-xs btn-success">Add Business</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
-                                    <table id="tableDebt" class="table table-bordered border-top border-1 border-secondary" width="100%">
+                                    <table id="tableBusiness" class="table table-bordered border-top border-1 border-secondary" width="100%">
                                         <thead>
                                             <tr class="bg-light text-center">
-                                                <th width="25%" class="text-dark">Name</th>
-                                                <th width="15%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Bank</th>
-                                                <th width="20%" class="text-dark">Account Number</th>
-                                                <th width="10%" class="text-dark">Amount</th>
-                                                <th width="10%" class="text-dark">Action</th>
+                                                <th width="30%" class="text-dark">Name</th>
+                                                <th width="20%" class="text-dark">Type</th>
+                                                <th width="20%" class="text-dark">Registration Number</th>
+                                                <th width="15%" class="text-dark">Amount</th>
+                                                <th width="15%" class="text-dark">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -112,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Insurance</button>
+                                        <button type="button" id="insurance" onClick="modalFinancial(this.id)" class="btn btn-xs btn-success">Add Insurance</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -134,23 +131,9 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <div class="col-md-12">
-                                        <label class="form-label">Remark</label>
-                                        <textarea name="remark" class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="hidden" name="id" value="">
-                </form>
+                </div>
                 <div class="col-md-12 text-center mt-0">
-                    <button onClick="submit()" class="btn btn-primary">Save</button>
+                    <button onClick="submit()" class="btn btn-primary">Save & Next</button>
                 </div>
             </div>
         </div>
@@ -169,7 +152,7 @@
         bFilter: false,
     })
 
-    pt = $("#tableDebt").DataTable({
+    pt = $("#tableBusiness").DataTable({
         bLengthChange: false,
         bFilter: false,
     })
@@ -178,4 +161,22 @@
         bLengthChange: false,
         bFilter: false,
     })
+
+    modalFinancial = (button_id, id) => {
+        runLoader('load')
+        
+        $.ajax({
+            type:"POST",
+            url: "{{ url('client/my-will/ajax/modal-') }}"+button_id,
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'id': id,
+                'will_id': "{{ request()->id }}"
+            }
+        }).done((response) => {
+            $("#variable_2").html(response)
+            $('#modal-'+button_id).modal('show')
+            closeLoader()
+        });
+    }
 </script>

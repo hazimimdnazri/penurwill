@@ -75,22 +75,22 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex flex-row-fluid">
                                         <div>
-                                            <h6 class="card-title">Debts & Liabilities</h6>
+                                            <h6 class="card-title">Real Estate Information</h6>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Debts & Liabilities</button>
+                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Real Estate</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
-                                    <table id="tableDebt" class="table table-bordered border-top border-1 border-secondary" width="100%">
+                                    <table id="tableEstate" class="table table-bordered border-top border-1 border-secondary" width="100%">
                                         <thead>
                                             <tr class="bg-light text-center">
-                                                <th width="25%" class="text-dark">Name</th>
-                                                <th width="15%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Bank</th>
-                                                <th width="20%" class="text-dark">Account Number</th>
-                                                <th width="10%" class="text-dark">Amount</th>
+                                                <th width="15%" class="text-dark">Classification</th>
+                                                <th width="30%" class="text-dark">Name</th>
+                                                <th width="20%" class="text-dark">Type</th>
+                                                <th width="15%" class="text-dark">Size</th>
+                                                <th width="10%" class="text-dark">Address</th>
                                                 <th width="10%" class="text-dark">Action</th>
                                             </tr>
                                         </thead>
@@ -102,18 +102,6 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <div class="col-md-12">
-                                        <label class="form-label">Remark</label>
-                                        <textarea name="remark" class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <input type="hidden" name="id" value="">
                 </form>
                 <div class="col-md-12 text-center mt-0">
@@ -136,7 +124,7 @@
         bFilter: false,
     })
 
-    pt = $("#tableDebt").DataTable({
+    pt = $("#tableEstate").DataTable({
         bLengthChange: false,
         bFilter: false,
     })

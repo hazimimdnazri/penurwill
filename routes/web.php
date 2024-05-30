@@ -62,6 +62,16 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
         Route::group(['prefix' => 'ajax'], function(){
             Route::post('modal-create', [WillController::class, 'modalCreate']);
             Route::post('load-tab', [WillController::class, 'loadTab']);
+            Route::post('modal-beneficiary', [WillController::class, 'modalBeneficiary']);
+            Route::post('store-beneficiary', [WillController::class, 'storeBeneficiary']);
+            Route::post('modal-banking', [WillController::class, 'modalBanking']);
+            Route::post('store-banking', [WillController::class, 'storeBanking']);
+            Route::post('modal-investment', [WillController::class, 'modalInvestment']);
+            Route::post('store-investment', [WillController::class, 'storeInvestment']);
+            Route::post('modal-business', [WillController::class, 'modalBusiness']);
+            Route::post('store-business', [WillController::class, 'storeBusiness']);
+            Route::post('modal-insurance', [WillController::class, 'modalInsurance']);
+            Route::post('store-insurance', [WillController::class, 'storeInsurance']);
         });
     });
 });

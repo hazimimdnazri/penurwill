@@ -11,9 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('will_controllers', function (Blueprint $table) {
+        Schema::create('will_insurances', function (Blueprint $table) {
             $table->id();
+            $table->foreignUuid('will_id');
+            $table->string('insurance');
+            $table->string('amount')->nullable();
+            $table->json('beneficiaries')->nullable();
             $table->timestamps();
+
+            $table->foreign('will_id')->references('id')->on('wills')->onDelete('cascade');
         });
     }
 
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('will_controllers');
+        Schema::dropIfExists('will_insurances');
     }
 };

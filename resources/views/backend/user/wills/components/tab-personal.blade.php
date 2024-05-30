@@ -100,22 +100,21 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex flex-row-fluid">
                                         <div>
-                                            <h6 class="card-title">Real Estate Information</h6>
+                                            <h6 class="card-title">Beneficiary Information</h6>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Real Estate</button>
+                                        <button type="button" onClick="modalBeneficary()" class="btn btn-xs btn-success">Add Beneficiary</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
-                                    <table id="tableFamily" class="table table-bordered border-top border-1 border-secondary" width="100%">
+                                    <table id="tableBeneficiary" class="table table-bordered border-top border-1 border-secondary" width="100%">
                                         <thead>
                                             <tr class="bg-light text-center">
-                                                <th width="15%" class="text-dark">Classification</th>
                                                 <th width="30%" class="text-dark">Name</th>
-                                                <th width="20%" class="text-dark">Type</th>
-                                                <th width="15%" class="text-dark">Size</th>
-                                                <th width="10%" class="text-dark">Address</th>
+                                                <th width="20%" class="text-dark">I.C Number</th>
+                                                <th width="20%" class="text-dark">Contact Number</th>
+                                                <th width="20%" class="text-dark">Address</th>
                                                 <th width="10%" class="text-dark">Action</th>
                                             </tr>
                                         </thead>
@@ -127,22 +126,10 @@
                         </div>
                     </div>
 
-                    <div class="col-md-12 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row g-3">
-                                    <div class="col-md-12">
-                                        <label class="form-label">Remark</label>
-                                        <textarea name="remark" class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <input type="hidden" name="id" value="">
                 </form>
                 <div class="col-md-12 text-center mt-0">
-                    <button onClick="submit()" class="btn btn-primary">Save</button>
+                    <button onClick="submit()" class="btn btn-primary">Save & Next</button>
                 </div>
             </div>
         </div>
@@ -157,10 +144,69 @@
         });
     })
 
-    dt = $("#tableFamily").DataTable({
+    dt = $("#tableBeneficiary").DataTable({
+        bLengthChange: false,
+        bFilter: false,
+        serverSide: true,
+        ajax: {
+            url: "{{ url('api/beneficiaries') }}",
+        },
+        columns: [
+            {class: 'align-middle', data: 'name'},
+            {class: 'text-center align-middle', data: 'ic' },
+            {class: 'text-center align-middle', data: 'phone_mobile' },
+            {
+                class: 'text-center align-middle',
+                orderable: false,
+                render: function (data, type, row) {
+                    return `
+                        ${row.address_1}<br>
+                        ${row.address_2}<br>
+                        ${row.address_3}<br>
+                    `
+                },
+            },
+            {
+                class: 'text-center align-middle',
+                orderable: false,
+                render: function (data, type, row) {
+                    return `
+                    <div class="dropdown">
+                        <button class="btn btn-xs btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" onClick="modalBeneficary(${row.id})" href="#">Edit</a>
+                        </div>
+                    </div>
+                    `
+                },
+            }
+        ],
+    })
+
+    dt = $("#tableEstate").DataTable({
         bLengthChange: false,
         bFilter: false,
     })
+
+    modalBeneficary = (id) => {
+        runLoader('load')
+        
+        $.ajax({
+            type:"POST",
+            url: "{{ url('client/my-will/ajax/modal-beneficiary') }}",
+            data: {
+                '_token': '{{ csrf_token() }}',
+                'id': id,
+                'will_id': "{{ request()->id }}"
+            }
+        }).done((response) => {
+            $("#variable_2").html(response)
+            $('#modal-beneficiary').modal('show')
+            closeLoader()
+        });
+    }
 
     submit = () => {
         var validateGroup = $(".needs-validation");

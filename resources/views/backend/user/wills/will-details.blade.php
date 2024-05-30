@@ -27,11 +27,15 @@
 							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'property' ? 'active' : NULL) : NULL }}" href="?tab=property" aria-selected="false">Property</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'testament' ? 'active' : NULL) : NULL }}" href="?tab=testament" aria-selected="false">Last Testament</a>
+							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'dnl' ? 'active' : NULL) : NULL }}" href="?tab=dnl" aria-selected="false">Debts & Liabilities</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'beneficiary' ? 'active' : NULL) : NULL }}" href="?tab=beneficiary" aria-selected="false">Beneficiary</a>
+							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'benefits' ? 'active' : NULL) : NULL }}" href="?tab=benefits" aria-selected="false">Future Benefits</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'testament' ? 'active' : NULL) : NULL }}" href="?tab=testament" aria-selected="false">Last Testament</a>
+						</li>
+
 						<li class="nav-item">
 							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'witness' ? 'active' : NULL) : NULL }}" href="?tab=witness" aria-selected="false">Executor & Witness</a>
 						</li>
@@ -50,6 +54,8 @@
 <script src="{{ asset('assets/backend/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
 <script>
     $(() => {
+		$("#mn-will").addClass('active')
+
         @if(isset($_GET['tab']))
         loadTab("{{ $_GET['tab'] }}");
         @else

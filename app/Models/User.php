@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function r_details(){
         return $this->hasOne(CustomerDetail::class, 'user_id');
     }
+
+    public function r_will(){
+        return $this->hasOne(Will::class, 'user_id');
+    }
 }

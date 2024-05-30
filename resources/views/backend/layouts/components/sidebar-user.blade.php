@@ -17,7 +17,7 @@
 					<i class="link-icon" data-feather="home"></i>
 					<span class="link-title">Dashboard</span>
 				</a>
-			<li class="nav-item my-1">
+			<li id="mn-will" class="nav-item my-1">
 				<a href="{{ url('client/my-will') }}" class="nav-link">
 					<i class="link-icon" data-feather="clipboard"></i>
 					<span class="link-title">Will</span>

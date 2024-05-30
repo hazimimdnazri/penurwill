@@ -17,4 +17,5 @@ use App\Http\Controllers\ApiController;
 
 Route::group(['middleware' => ['auth']], function(){
     Route::get('users', [ApiController::class, 'users']);
+    Route::get('beneficiaries', [ApiController::class, 'beneficiaries']);
 });
