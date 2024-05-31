@@ -55,6 +55,10 @@ class WillController extends Controller
                 return view('backend.user.wills.components.tab-'.$request->tab);
                 break;
             
+            case 'testament':                
+                return view('backend.user.wills.components.tab-'.$request->tab);
+                break;
+            
             case 'witness':                
                 return view('backend.user.wills.components.tab-'.$request->tab, compact('states', 'banks'));
                 break;
@@ -158,11 +162,29 @@ class WillController extends Controller
     }
 
     public function modalDigital(Request $request){
-        $property = isset($request->id) ? WillOtherProperty::findorfail($request->id) : new WillOtherProperty;
-        return view('backend.user.wills.components.modal-digital', compact('property'));
+        return view('backend.user.wills.components.modal-digital');
     }
 
     public function storeDigital(Request $request){
+        return $request;
+    }
+
+    public function modalEstate(Request $request){
+        $banks = LBank::all();
+        $states = LState::all();
+        return view('backend.user.wills.components.modal-estate', compact('banks', 'states'));
+    }
+
+    public function storeEstate(Request $request){
+        return $request;
+    }
+
+    public function modalDebt(Request $request){
+        $banks = LBank::all();
+        return view('backend.user.wills.components.modal-debt', compact('banks'));
+    }
+
+    public function storeDebt(Request $request){
         return $request;
     }
 }

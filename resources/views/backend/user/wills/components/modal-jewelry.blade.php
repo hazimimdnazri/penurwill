@@ -17,13 +17,18 @@
                         </select>
                     </div>
                     <div class="col-md-4 needs-validation">
-                        <label class="form-label">Weight (gram)</label>
-                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" name="weight" class="form-control" value="">
+                        <label class="form-label">Weight</label>
+                        <div class="input-group">
+                            <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" name="weight" class="form-control" value="">
+                            <span class="input-group-text" id="basic-addon1">gram</span>
+                        </div>
                     </div>
-
                     <div class="col-md-4 needs-validation">
-                        <label class="form-label">Quantity (pcs)</label>
-                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="3" name="quantity" class="form-control" value="">
+                        <label class="form-label">Quantity</label>
+                        <div class="input-group">
+                            <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="3" name="quantity" class="form-control" value="">
+                            <span class="input-group-text" id="basic-addon1">pcs</span>
+                        </div>
                     </div>
                     <input type="hidden" name="jewelry_id" value="{{ $jewelry->id }}">
                 </form>

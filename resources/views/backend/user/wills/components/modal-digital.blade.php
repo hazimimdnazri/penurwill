@@ -1,37 +1,35 @@
-<div class="modal fade" id="modal-banking" tabindex="-1" data-bs-focus="false" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+<div class="modal fade" id="modal-digital" tabindex="-1" data-bs-focus="false" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0">
             <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white">Banking Information</h5>
+                <h5 class="modal-title text-white">Digital Asset Information</h5>
             </div>
             <div class="modal-body">
-                <form id="bankingData" class="row g-3">
+                <form id="digitalData" class="row g-3">
                     @csrf
-                    <div class="col-md-12">
-                        <label class="form-label">Bank <span class="text-danger">*</span></label>
+                    <div class="col-md-6">
+                        <label class="form-label">Type <span class="text-danger">*</span></label>
                         <select name="bank_id" class="form-select select2">
-                            <option value="">-- Select Bank --</option>
-                            @foreach($banks as $b)
-                            <option value="{{ $b->id }}">{{ strtoupper($b->bank) }}</option>
-                            @endforeach
+                            <option value="1">Social Media Account</option>
+                            <option value="2">Domain Name</option>
+                            <option value="3">Web Hosting</option>
+                            <option value="4">Virtual Private Server</option>
+                            <option value="5">Others</option>
                         </select>
                     </div>
-                    <div class="col-md-4 needs-validation">
-                        <label class="form-label">Bank Branch </label>
-                        <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
+                    <div class="col-md-6 needs-validation">
+                        <label class="form-label">Asset Name </label>
+                        <input type="text" style="text-transform: uppercase" name="insurance" class="form-control" value="">
                     </div>
-                    <div class="col-md-4 needs-validation">
-                        <label class="form-label">Account Number </label>
-                        <input type="text" style="text-transform: uppercase" name="account_number" class="form-control" value="">
+                    <div class="col-md-6 needs-validation">
+                        <label class="form-label">Asset URL </label>
+                        <input type="text" style="text-transform: uppercase" name="insurance" class="form-control" value="">
                     </div>
-                    <div class="col-md-4 needs-validation">
-                        <label class="form-label">Amount </label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">RM</span>
-                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
-                        </div>
+                    <div class="col-md-6 needs-validation">
+                        <label class="form-label">Asset Provider </label>
+                        <input type="text" style="text-transform: uppercase" name="provider" class="form-control" value="">
                     </div>
-                    <input type="hidden" name="banking_id" value="{{ $bank->id }}">
+                    <input type="hidden" name="digital_id" value="">
                 </form>
             </div>
             <div class="modal-footer">
@@ -45,9 +43,9 @@
 <script>
     submitModal = () => {
         var validateGroup = $(".needs-validation");
-        var formData = new FormData($('#bankingData')[0]);
+        var formData = new FormData($('#digitalData')[0]);
 
-        if ($('#bankingData')[0].checkValidity() === true) {
+        if ($('#digitalData')[0].checkValidity() === true) {
             runLoader('save')
 
             $.ajax({

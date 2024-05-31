@@ -12,21 +12,24 @@
                         <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Business Type <span class="text-danger">*</span></label>
+                        <label class="form-label">Business Nature <span class="text-danger">*</span></label>
                         <select name="bank_id" class="form-select select2">
-                            <option value="">Stocks</option>
-                            <option value="">Bonds</option>
-                            <option value="">Mutual Funds</option>
-                            <option value="">Brokerage Account</option>
+                            <option value="">Type 1</option>
+                            <option value="">Type 2</option>
+                            <option value="">Type 3</option>
+                            <option value="">Type 4</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Registration Number </label>
+                        <label class="form-label">Business Registration Number </label>
                         <input type="text" style="text-transform: uppercase" name="account_number" class="form-control" value="">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Share Amount </label>
-                        <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">RM</span>
+                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
+                        </div>
                     </div>
                     <input type="hidden" name="banking_id" value="{{ $business->id }}">
                 </form>

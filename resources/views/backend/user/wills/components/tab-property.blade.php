@@ -110,7 +110,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Digital Asset</button>
+                                        <button type="button" id="digital" onClick="modalProperty(this.id)" class="btn btn-xs btn-success">Add Digital Asset</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -142,7 +142,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Real Estate</button>
+                                        <button type="button" id="estate" onClick="modalProperty(this.id)" onClick="modalFamily()" class="btn btn-xs btn-success">Add Real Estate</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">

@@ -13,7 +13,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalFamily()" class="btn btn-xs btn-success">Add Debts & Liabilities</button>
+                                        <button type="button" onClick="modalDebt()" class="btn btn-xs btn-success">Add Debts & Liabilities</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -51,12 +51,12 @@
         bFilter: false,
     })
 
-    modalFinancial = (button_id, id) => {
+    modalDebt = (button_id, id) => {
         runLoader('load')
         
         $.ajax({
             type:"POST",
-            url: "{{ url('client/my-will/ajax/modal-') }}"+button_id,
+            url: "{{ url('client/my-will/ajax/modal-debt') }}",
             data: {
                 '_token': '{{ csrf_token() }}',
                 'id': id,
@@ -64,7 +64,7 @@
             }
         }).done((response) => {
             $("#variable_2").html(response)
-            $('#modal-'+button_id).modal('show')
+            $('#modal-debt').modal('show')
             closeLoader()
         });
     }

@@ -22,11 +22,17 @@
                     </div>
                     <div class="col-md-4 needs-validation">
                         <label class="form-label">Share Percentage </label>
-                        <input type="text" style="text-transform: uppercase" name="account_number" class="form-control" value="">
+                        <div class="input-group">
+                            <input type="text" style="text-transform: uppercase" name="account_number" class="form-control" value="">
+                            <span class="input-group-text" id="basic-addon1">%</span>
+                        </div>
                     </div>
                     <div class="col-md-4 needs-validation">
                         <label class="form-label">Share Amount </label>
-                        <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">RM</span>
+                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
+                        </div>
                     </div>
                     <input type="hidden" name="banking_id" value="{{ $investment->id }}">
                 </form>

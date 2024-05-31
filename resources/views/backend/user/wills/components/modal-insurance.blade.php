@@ -7,9 +7,13 @@
             <div class="modal-body">
                 <form id="insuranceData" class="row g-3">
                     @csrf
-                    <div class="col-md-12 needs-validation">
+                    <div class="col-md-6 needs-validation">
                         <label class="form-label">Insurance Name </label>
-                        <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
+                        <input type="text" style="text-transform: uppercase" name="insurance" class="form-control" value="">
+                    </div>
+                    <div class="col-md-6 needs-validation">
+                        <label class="form-label">Insurance Provider </label>
+                        <input type="text" style="text-transform: uppercase" name="provider" class="form-control" value="">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Type <span class="text-danger">*</span></label>
@@ -19,9 +23,12 @@
                             <option value="">Takaful</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Amount </label>
-                        <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
+                    <div class="col-md-6 needs-validation">
+                        <label class="form-label">Insurance Amount </label>
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">RM</span>
+                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
+                        </div>
                     </div>
                     <input type="hidden" name="banking_id" value="{{ $insurance->id }}">
                 </form>

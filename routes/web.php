@@ -80,6 +80,10 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('store-property-other', [WillController::class, 'storePropertyOther']);
             Route::post('modal-digital', [WillController::class, 'modalDigital']);
             Route::post('store-digital', [WillController::class, 'storeDigital']);
+            Route::post('modal-estate', [WillController::class, 'modalEstate']);
+            Route::post('store-estate', [WillController::class, 'storeEstate']);
+            Route::post('modal-debt', [WillController::class, 'modalDebt']);
+            Route::post('store-debt', [WillController::class, 'storeDebt']);
         });
     });
 });

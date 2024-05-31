@@ -20,12 +20,17 @@
                     </div>
                     <div class="col-md-4 needs-validation">
                         <label class="form-label">Worth</label>
-                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="7" name="worth" class="form-control" value="">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">RM</span>
+                            <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="7" name="worth" class="form-control" value="">
+                        </div>
                     </div>
-
                     <div class="col-md-4 needs-validation">
-                        <label class="form-label">Quantity (pcs)</label>
-                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="3" name="quantity" class="form-control" value="">
+                        <label class="form-label">Quantity</label>
+                        <div class="input-group">
+                            <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="3" name="quantity" class="form-control" value="">
+                            <span class="input-group-text" id="basic-addon1">pcs</span>
+                        </div>
                     </div>
                     <input type="hidden" name="property_id" value="{{ $property->id }}">
                 </form>
