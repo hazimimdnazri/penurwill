@@ -11,6 +11,9 @@ use App\Models\WillBank;
 use App\Models\WillInvestment;
 use App\Models\WillInsurance;
 use App\Models\WillBusiness;
+use App\Models\WillHirePurchase;
+use App\Models\WillJewelry;
+use App\Models\WillOtherProperty;
 
 class WillController extends Controller
 {
@@ -123,6 +126,43 @@ class WillController extends Controller
     }
 
     public function storeInsurance(Request $request){
+        return $request;
+    }
+
+    public function modalHirePurchase(Request $request){
+        $hire_purchase = isset($request->id) ? WillHirePurchase::findorfail($request->id) : new WillHirePurchase;
+        $banks = LBank::all();
+        return view('backend.user.wills.components.modal-hire-purchase', compact('hire_purchase', 'banks'));
+    }
+
+    public function storeHirePurchase(Request $request){
+        return $request;
+    }
+
+    public function modalJewelry(Request $request){
+        $jewelry = isset($request->id) ? WillJewelry::findorfail($request->id) : new WillJewelry;
+        return view('backend.user.wills.components.modal-jewelry', compact('jewelry'));
+    }
+
+    public function storeJewelry(Request $request){
+        return $request;
+    }
+
+    public function modalPropertyOther(Request $request){
+        $property = isset($request->id) ? WillOtherProperty::findorfail($request->id) : new WillOtherProperty;
+        return view('backend.user.wills.components.modal-property-other', compact('property'));
+    }
+
+    public function storePropertyOther(Request $request){
+        return $request;
+    }
+
+    public function modalDigital(Request $request){
+        $property = isset($request->id) ? WillOtherProperty::findorfail($request->id) : new WillOtherProperty;
+        return view('backend.user.wills.components.modal-digital', compact('property'));
+    }
+
+    public function storeDigital(Request $request){
         return $request;
     }
 }

@@ -1,34 +1,33 @@
-<div class="modal fade" id="modal-banking" tabindex="-1" data-bs-focus="false" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+<div class="modal fade" id="modal-property-other" tabindex="-1" data-bs-focus="false" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0">
             <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white">Banking Information</h5>
+                <h5 class="modal-title text-white">Other Property Information</h5>
             </div>
             <div class="modal-body">
-                <form id="bankingData" class="row g-3">
+                <form id="investmentData" class="row g-3">
                     @csrf
-                    <div class="col-md-12">
-                        <label class="form-label">Bank <span class="text-danger">*</span></label>
-                        <select name="bank_id" class="form-select select2">
-                            <option value="">-- Select Bank --</option>
-                            @foreach($banks as $b)
-                            <option value="{{ $b->id }}">{{ strtoupper($b->bank) }}</option>
-                            @endforeach
+                    <div class="col-md-4">
+                        <label class="form-label">Type <span class="text-danger">*</span></label>
+                        <select name="type" class="form-select select2">
+                            <option value="1">Furniture</option>
+                            <option value="2">Electronic</option>
+                            <option value="3">Art</option>
+                            <option value="4">Collectibles</option>
+                            <option value="5">Household</option>
+                            <option value="6">Clothes</option>
                         </select>
                     </div>
                     <div class="col-md-4 needs-validation">
-                        <label class="form-label">Bank Branch </label>
-                        <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
+                        <label class="form-label">Worth</label>
+                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="7" name="worth" class="form-control" value="">
                     </div>
+
                     <div class="col-md-4 needs-validation">
-                        <label class="form-label">Account Number </label>
-                        <input type="text" style="text-transform: uppercase" name="account_number" class="form-control" value="">
+                        <label class="form-label">Quantity (pcs)</label>
+                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="3" name="quantity" class="form-control" value="">
                     </div>
-                    <div class="col-md-4 needs-validation">
-                        <label class="form-label">Amount </label>
-                        <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
-                    </div>
-                    <input type="hidden" name="banking_id" value="{{ $bank->id }}">
+                    <input type="hidden" name="property_id" value="{{ $property->id }}">
                 </form>
             </div>
             <div class="modal-footer">
@@ -42,9 +41,9 @@
 <script>
     submitModal = () => {
         var validateGroup = $(".needs-validation");
-        var formData = new FormData($('#bankingData')[0]);
+        var formData = new FormData($('#investmentData')[0]);
 
-        if ($('#bankingData')[0].checkValidity() === true) {
+        if ($('#investmentData')[0].checkValidity() === true) {
             runLoader('save')
 
             $.ajax({

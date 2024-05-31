@@ -72,6 +72,14 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('store-business', [WillController::class, 'storeBusiness']);
             Route::post('modal-insurance', [WillController::class, 'modalInsurance']);
             Route::post('store-insurance', [WillController::class, 'storeInsurance']);
+            Route::post('modal-hire-purchase', [WillController::class, 'modalHirePurchase']);
+            Route::post('store-hire-purchase', [WillController::class, 'storeHirePurchase']);
+            Route::post('modal-jewelry', [WillController::class, 'modalJewelry']);
+            Route::post('store-jewelry', [WillController::class, 'storeJewelry']);
+            Route::post('modal-property-other', [WillController::class, 'modalPropertyOther']);
+            Route::post('store-property-other', [WillController::class, 'storePropertyOther']);
+            Route::post('modal-digital', [WillController::class, 'modalDigital']);
+            Route::post('store-digital', [WillController::class, 'storeDigital']);
         });
     });
 });
