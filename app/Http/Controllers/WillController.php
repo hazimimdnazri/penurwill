@@ -36,15 +36,15 @@ class WillController extends Controller
     public function loadTab(Request $request){
         $will = isset($request->will_id) ? Will::findorfail($request->will_id) : new Will;
         $states = LState::all();
-        $banks = LBank::all();
 
         switch ($request->tab) {
             case 'personal':                
-                return view('backend.user.wills.components.tab-'.$request->tab, compact('states', 'banks'));
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('states',));
                 break;
             
-            case 'financial':                
-                return view('backend.user.wills.components.tab-'.$request->tab);
+            case 'financial':
+                $bankings = WillBank::where('will_id', auth()->user()->r_will->id)->get();
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('bankings'));
                 break;
             
             case 'property':                
@@ -75,6 +75,84 @@ class WillController extends Controller
         return view('backend.user.wills.components.modal-beneficiary', compact('states', 'beneficiary'));
     }
 
+    public function modalBeneficiaryAdd(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
+        $item_id = $request->item_id;
+        $beneficiary_id = $request->id;
+
+        switch ($request->modal){
+            case 'banking':
+                $beneficiary = $beneficiary_id ? json_decode(WillBank::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillBank::findorfail($item_id);
+                }
+                break;
+            
+            default:
+                break;
+        }
+
+        if($request->action == 'delete'){
+            $arr = json_decode($item->beneficiaries, true);
+            unset($arr[$request->id]);
+
+            $item->beneficiaries = $arr;
+            if($item->save()){
+                return [
+                    'status' => 'success',
+                    'message' => 'Beneficiary has been deleted.'
+                ];
+            }
+        }
+
+        return view('backend.user.wills.components.modal-beneficiary-add', compact('beneficiaries', 'item_id', 'beneficiary', 'beneficiary_id'));
+    }
+
+    public function storeBeneficiaryAdd(Request $request){
+        $arr = [
+            $request->beneficiary_id => [
+                'percentage' => $request->percentage,
+                'remark' => $request->remark,
+            ]
+        ];
+
+        switch ($request->tab) {
+            case 'banking':
+                $item = WillBank::findorfail($request->item_id);
+                if($item->beneficiaries){
+                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
+
+                    if($ex){
+                        $new = json_decode($item->beneficiaries, true);
+                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
+                        $new[$request->beneficiary_id]['remark'] = $request->remark;
+                        $arr = $new;
+
+                    } else {
+                        $arr = json_decode($item->beneficiaries, true);
+                        $arr[$request->beneficiary_id] = [
+                            'percentage' => $request->percentage,
+                            'remark' => $request->remark,
+                        ];
+                    }
+                }
+                
+                break;
+            
+            default:
+                break;
+        }
+
+        $item->beneficiaries = $arr;
+        if($item->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Beneficiary has been saved.'
+            ];
+        }
+    }
+
     public function storeBeneficiary(Request $request){
         $beneficiary = isset($request->beneficiary_id) ? WillBeneficiary::findorfail($request->beneficiary_id) : new WillBeneficiary;
         $beneficiary->name = strtoupper($request->name);
@@ -103,7 +181,19 @@ class WillController extends Controller
     }
 
     public function storeBanking(Request $request){
-        return $request;
+        $bank = isset($request->id) ? WillBank::findorfail($request->id) : new WillBank;
+        $bank->bank_id = $request->bank_id;
+        $bank->will_id = auth()->user()->r_will->id;
+        $bank->branch = strtoupper($request->branch);
+        $bank->account_number = strtoupper($request->account_number);
+        $bank->amount = strtoupper($request->amount);
+
+        if($bank->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Banking information has been saved.'
+            ];
+        }
     }
 
     public function modalInvestment(Request $request){

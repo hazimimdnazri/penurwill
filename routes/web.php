@@ -64,6 +64,8 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('load-tab', [WillController::class, 'loadTab']);
             Route::post('modal-beneficiary', [WillController::class, 'modalBeneficiary']);
             Route::post('store-beneficiary', [WillController::class, 'storeBeneficiary']);
+            Route::post('modal-beneficiary-add', [WillController::class, 'modalBeneficiaryAdd']);
+            Route::post('store-beneficiary-add', [WillController::class, 'storeBeneficiaryAdd']);
             Route::post('modal-banking', [WillController::class, 'modalBanking']);
             Route::post('store-banking', [WillController::class, 'storeBanking']);
             Route::post('modal-investment', [WillController::class, 'modalInvestment']);
