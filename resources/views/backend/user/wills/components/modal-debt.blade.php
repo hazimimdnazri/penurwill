@@ -7,7 +7,7 @@
             <div class="modal-body">
                 <form id="debtData" class="row g-3">
                     @csrf
-                    <div class="col-md-12 needs-validation">
+                    <div class="col-md-6 needs-validation">
                         <label class="form-label">Debts & Liabilities Name </label>
                         <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
                     </div>
@@ -18,21 +18,9 @@
                             <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Balance Amount </label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">RM</span>
-                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
-                        </div>
-                    </div>
                     <div class="col-md-12">
-                        <label class="form-label">Debts & Liabilities Bank </label>
-                        <select name="bank_id" class="form-select select2">
-                            <option value="">-- Select Bank --</option>
-                            @foreach($banks as $b)
-                            <option value="{{ $b->id }}">{{ strtoupper($b->bank) }}</option>
-                            @endforeach
-                        </select>
+                        <label class="form-label">Remark </label>
+                        <textarea name="remark" class="form-control" rows="5"></textarea>
                     </div>
                     <input type="hidden" name="banking_id" value="">
                 </form>

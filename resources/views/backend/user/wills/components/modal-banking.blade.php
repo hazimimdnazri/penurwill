@@ -32,6 +32,31 @@
                         </div>
                     </div>
                     <input type="hidden" name="banking_id" value="{{ $bank->id }}">
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row-fluid">
+                            <div>
+                                <h6 class="card-title">Beneficiary Information</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <button type="button" onClick="modalBeneficiary()" class="btn btn-xs btn-success">Add Beneficiary</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-0 pt-0">
+                        <table id="tableBeneficiary" class="table table-bordered border-top border-1 border-secondary" width="100%">
+                            <thead>
+                                <tr class="bg-light text-center">
+                                    <th width="30%" class="text-dark">Beneficiary</th>
+                                    <th width="20%" class="text-dark">Percentage</th>
+                                    <th width="40%" class="text-dark">Remark</th>
+                                    <th width="10%" class="text-dark">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -43,6 +68,13 @@
 </div>
 
 <script>
+    benT = $("#tableBeneficiary").DataTable({
+        bLengthChange: false,
+        bFilter: false,
+        bInfo: false,
+        autoWidth: false,
+    })
+
     submitModal = () => {
         var validateGroup = $(".needs-validation");
         var formData = new FormData($('#bankingData')[0]);

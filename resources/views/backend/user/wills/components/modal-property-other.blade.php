@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0">
             <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white">Other Property Information</h5>
+                <h5 class="modal-title text-white">Additional Asset Information</h5>
             </div>
             <div class="modal-body">
                 <form id="investmentData" class="row g-3">

@@ -11,15 +11,15 @@
                         <label class="form-label">Real Estate Type <span class="text-danger">*</span></label>
                         <select name="bank_id" class="form-select select2">
                             <option value="">-- Select Type --</option>
-                            <option value="1">House</option>
-                            <option value="2">Land</option>
-                            <option value="3">Commercial Building</option>
-                            <option value="4">Others</option>
+                            <option value="1">House (Lot)</option>
+                            <option value="2">House (Semi-D)</option>
+                            <option value="3">House (Bungalow)</option>
+                            <option value="4">House (Terrace)</option>
+                            <option value="5">House (Apartment)</option>
+                            <option value="6">Land</option>
+                            <option value="7">Commercial Building</option>
+                            <option value="8">Others</option>
                         </select>
-                    </div>
-                    <div class="col-md-6 needs-validation">
-                        <label class="form-label">Real Estate Name </label>
-                        <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Bank <span class="text-danger">*</span></label>
@@ -34,22 +34,15 @@
                         <label class="form-label">Bank Branch </label>
                         <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-6 needs-validation">
                         <label class="form-label">Account Number </label>
                         <input type="text" style="text-transform: uppercase" name="account_number" class="form-control" value="">
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-6 needs-validation">
                         <label class="form-label">Real Estate Size </label>
                         <div class="input-group">
                             <input type="text" style="text-transform: uppercase" name="size" class="form-control" value="">
                             <span class="input-group-text" id="basic-addon1">sqft</span>
-                        </div>
-                    </div>
-                    <div class="col-md-4 needs-validation">
-                        <label class="form-label">Amount </label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">RM</span>
-                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
                         </div>
                     </div>
                     <div class="col-md-12">

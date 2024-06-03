@@ -16,3 +16,15 @@ Add business into the financial
     - comp reg number
     - Amount of share
     - Beneficiary
+
+Add property word into real estate
+Specify if 'others selected'
+other property -> additional asset
+addition information inside asset
+Put a remark into the additional asset.
+remove real estate name
+remove real estate amount
+debts remove bank, replace with remarks.
+remove balance amount
+remark into last will & testament
+remark for compulsory 2 witnesses
