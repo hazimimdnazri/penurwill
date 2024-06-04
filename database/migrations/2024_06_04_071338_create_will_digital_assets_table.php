@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('will_jewelries', function (Blueprint $table) {
+        Schema::create('will_digital_assets', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('will_id');
-            $table->string('jewelry')->nullable();
-            $table->integer('type')->default(1); // Car / Motorcycle / Lorry
-            $table->float('weight')->nullable();
-            $table->integer('quantity')->default(1);
+            $table->integer('type')->default(1);
+            $table->string('asset')->nullable();
+            $table->string('url')->nullable();
+            $table->string('provider')->nullable();
             $table->json('beneficiaries')->nullable();
             $table->timestamps();
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('will_jewelries');
+        Schema::dropIfExists('will_digital_assets');
     }
 };

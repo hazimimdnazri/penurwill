@@ -146,7 +146,7 @@
                     <input type="hidden" name="id" value="">
                 </form>
                 <div class="col-md-12 text-center mt-0">
-                    <button onClick="submit()" class="btn btn-primary">Save</button>
+                    <button onClick="submit()" class="btn btn-primary">Save & Finish</button>
                 </div>
             </div>
         </div>

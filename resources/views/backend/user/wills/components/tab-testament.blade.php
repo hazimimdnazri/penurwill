@@ -23,10 +23,17 @@
                     </div>
                 </div>
                 <div class="col-md-12 text-center mt-0">
-                    <button onClick="submit()" class="btn btn-primary">Save & Next</button>
+                    <button onClick="next()" class="btn btn-primary">Save & Next</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div id="variable_2"></div>
+
+<script>
+    next = () => {
+        runLoader('load')
+        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=witness') }}");
+    }
+</script>

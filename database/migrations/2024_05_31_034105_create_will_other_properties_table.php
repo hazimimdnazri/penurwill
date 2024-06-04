@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('worth')->nullable();
             $table->integer('quantity')->default(1);
             $table->json('beneficiaries')->nullable();
+            $table->timestamps();
 
             $table->foreign('will_id')->references('id')->on('wills')->onDelete('cascade');
         });

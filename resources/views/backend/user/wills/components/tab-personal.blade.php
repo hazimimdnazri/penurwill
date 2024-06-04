@@ -129,7 +129,7 @@
                     <input type="hidden" name="id" value="">
                 </form>
                 <div class="col-md-12 text-center mt-0">
-                    <button onClick="submit()" class="btn btn-primary">Save & Next</button>
+                    <button onClick="next()" class="btn btn-primary">Save & Next</button>
                 </div>
             </div>
         </div>
@@ -208,41 +208,8 @@
         });
     }
 
-    submit = () => {
-        var validateGroup = $(".needs-validation");
-        var formData = new FormData($('#leadData')[0]);
-
-        if ($('#leadData')[0].checkValidity() === true) {
-            runLoader('save')
-
-            $.ajax({
-                url: "{{ url('counselor/leads/ajax/store-lead') }}",
-                type: 'POST',
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false
-            }).done((response) => {
-                if(response.status == 'success'){
-                    runAlertSuccess(response.message)
-                    .then((result) => {
-                    if(result.value){
-                        window.location.replace("{{ url('counselor/leads') }}")
-                    }
-                })
-                } else {
-                    runAlertError(response.message)
-                }
-            });
-        } else {
-            Swal.fire(
-                'Error!',
-                'Please fill all the required field.',
-                'error'
-            )
-            for (var i = 0; i < validateGroup.length; i++) {
-                validateGroup[i].classList.add('was-validated');
-            }
-        }
+    next = () => {
+        runLoader('load')
+        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=financial') }}");
     }
 </script>

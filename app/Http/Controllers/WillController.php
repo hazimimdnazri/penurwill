@@ -15,6 +15,7 @@ use App\Models\WillRealEstate;
 use App\Models\WillHirePurchase;
 use App\Models\WillJewelry;
 use App\Models\WillOtherProperty;
+use App\Models\WillDigitalAsset;
 
 class WillController extends Controller
 {
@@ -52,9 +53,12 @@ class WillController extends Controller
                 break;
             
             case 'property':
-                $estates = WillRealEstate::where('will_id', auth()->user()->r_will->id)->get();        
-                $hire_purchases = WillHirePurchase::where('will_id', auth()->user()->r_will->id)->get();        
-                return view('backend.user.wills.components.tab-'.$request->tab, compact('estates', 'hire_purchases'));
+                $estates = WillRealEstate::where('will_id', auth()->user()->r_will->id)->get();
+                $hire_purchases = WillHirePurchase::where('will_id', auth()->user()->r_will->id)->get();
+                $jewelries = WillJewelry::where('will_id', auth()->user()->r_will->id)->get();
+                $others = WillOtherProperty::where('will_id', auth()->user()->r_will->id)->get();
+                $digitals = WillDigitalAsset::where('will_id', auth()->user()->r_will->id)->get();
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('estates', 'hire_purchases', 'jewelries', 'others', 'digitals'));
                 break;
             
             case 'dnl':                
@@ -66,7 +70,7 @@ class WillController extends Controller
                 break;
             
             case 'witness':                
-                return view('backend.user.wills.components.tab-'.$request->tab, compact('states', 'banks'));
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('states'));
                 break;
             
             default:
@@ -136,6 +140,30 @@ class WillController extends Controller
                 }
                 break;
             
+            case 'jewelry':
+                $beneficiary = $beneficiary_id ? json_decode(WillJewelry::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillJewelry::findorfail($item_id);
+                }
+                break;
+            
+            case 'other':
+                $beneficiary = $beneficiary_id ? json_decode(WillOtherProperty::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillOtherProperty::findorfail($item_id);
+                }
+                break;
+            
+            case 'digital':
+                $beneficiary = $beneficiary_id ? json_decode(WillDigitalAsset::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillDigitalAsset::findorfail($item_id);
+                }
+                break;
+            
             default:
                 break;
         }
@@ -187,6 +215,18 @@ class WillController extends Controller
             
             case 'hire_purchase':
                 $item = WillHirePurchase::findorfail($request->item_id);
+                break;
+            
+            case 'jewelry':
+                $item = WillJewelry::findorfail($request->item_id);
+                break;
+            
+            case 'other':
+                $item = WillOtherProperty::findorfail($request->item_id);
+                break;
+            
+            case 'digital':
+                $item = WillDigitalAsset::findorfail($request->item_id);
                 break;
             
             default:
@@ -355,24 +395,60 @@ class WillController extends Controller
     }
 
     public function storeJewelry(Request $request){
-        return $request;
+        $jewelry = isset($request->id) ? WillJewelry::findorfail($request->id) : new WillJewelry;
+        $jewelry->will_id = auth()->user()->r_will->id;
+        $jewelry->type = $request->type;
+        $jewelry->jewelry = $request->jewelry;
+        $jewelry->weight = $request->weight;
+        $jewelry->quantity = $request->quantity;
+
+        if($jewelry->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Jewelry information has been saved.'
+            ];
+        }
     }
 
     public function modalPropertyOther(Request $request){
-        $property = isset($request->id) ? WillOtherProperty::findorfail($request->id) : new WillOtherProperty;
-        return view('backend.user.wills.components.modal-property-other', compact('property'));
+        $other = isset($request->id) ? WillOtherProperty::findorfail($request->id) : new WillOtherProperty;
+        return view('backend.user.wills.components.modal-property-other', compact('other'));
     }
 
     public function storePropertyOther(Request $request){
-        return $request;
+        $other = isset($request->id) ? WillOtherProperty::findorfail($request->id) : new WillOtherProperty;
+        $other->will_id = auth()->user()->r_will->id;
+        $other->type = $request->type;
+        $other->worth = $request->worth;
+        $other->quantity = $request->quantity;
+
+        if($other->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Additional asset information has been saved.'
+            ];
+        }
     }
 
     public function modalDigital(Request $request){
-        return view('backend.user.wills.components.modal-digital');
+        $digital = isset($request->id) ? WillDigitalAsset::findorfail($request->id) : new WillDigitalAsset;
+        return view('backend.user.wills.components.modal-digital', compact('digital'));
     }
 
     public function storeDigital(Request $request){
-        return $request;
+        $digital = isset($request->id) ? WillDigitalAsset::findorfail($request->id) : new WillDigitalAsset;
+        $digital->will_id = auth()->user()->r_will->id;
+        $digital->type = $request->type;
+        $digital->url = strtolower($request->url);
+        $digital->asset = strtoupper($request->asset);
+        $digital->provider = strtoupper($request->provider);
+
+        if($digital->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Digital asset information has been saved.'
+            ];
+        }
     }
 
     public function modalEstate(Request $request){
