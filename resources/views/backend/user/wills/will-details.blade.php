@@ -35,9 +35,11 @@
 						<li class="nav-item">
 							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'testament' ? 'active' : NULL) : NULL }}" href="?tab=testament" aria-selected="false">Last Testament</a>
 						</li>
-
 						<li class="nav-item">
-							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'witness' ? 'active' : NULL) : NULL }}" href="?tab=witness" aria-selected="false">Executor & Witness</a>
+							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'executor' ? 'active' : NULL) : NULL }}" href="?tab=executor" aria-selected="false">Executors</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'witness' ? 'active' : NULL) : NULL }}" href="?tab=witness" aria-selected="false">Witnesses</a>
 						</li>
 					</ul>
 					<div class="tab-content border rounded border-top-0 p-3" id="myTabContent">

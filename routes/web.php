@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
     Route::group(['prefix' => 'my-will'], function(){
         Route::get('/', [WillController::class, 'myWill']);
         Route::get('{id}', [WillController::class, 'willDetails']);
+        Route::get('{id}/generate', [WillController::class, 'willGenerate']);
 
         Route::group(['prefix' => 'ajax'], function(){
             Route::post('modal-create', [WillController::class, 'modalCreate']);
@@ -86,6 +87,8 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('store-estate', [WillController::class, 'storeEstate']);
             Route::post('modal-debt', [WillController::class, 'modalDebt']);
             Route::post('store-debt', [WillController::class, 'storeDebt']);
+            Route::post('modal-executor', [WillController::class, 'modalExecutor']);
+            Route::post('store-executor', [WillController::class, 'storeExecutor']);
         });
     });
 });

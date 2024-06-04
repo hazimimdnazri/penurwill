@@ -16,6 +16,7 @@ use App\Models\WillHirePurchase;
 use App\Models\WillJewelry;
 use App\Models\WillOtherProperty;
 use App\Models\WillDigitalAsset;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class WillController extends Controller
 {
@@ -66,6 +67,10 @@ class WillController extends Controller
                 break;
             
             case 'testament':                
+                return view('backend.user.wills.components.tab-'.$request->tab);
+                break;
+            
+            case 'executor':                
                 return view('backend.user.wills.components.tab-'.$request->tab);
                 break;
             
@@ -488,5 +493,18 @@ class WillController extends Controller
 
     public function storeDebt(Request $request){
         return $request;
+    }
+
+    public function modalExecutor(Request $request){
+        return view('backend.user.wills.components.modal-executor');
+    }
+
+    public function storeExecutor(Request $request){
+        return $request;
+    }
+
+    public function willGenerate($id){
+        $pdf = PDF::loadView('backend.user.wills.will-pdf')->setPaper('A4', 'portrait');
+        return $pdf->stream('Generated Will.pdf');
     }
 }
