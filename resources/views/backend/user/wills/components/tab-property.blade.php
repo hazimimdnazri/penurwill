@@ -23,14 +23,33 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="15%" class="text-dark">Classification</th>
-                                                <th width="30%" class="text-dark">Name</th>
-                                                <th width="20%" class="text-dark">Type</th>
+                                                <th width="30%" class="text-dark">Bank</th>
+                                                <th width="20%" class="text-dark">Account</th>
                                                 <th width="15%" class="text-dark">Size</th>
                                                 <th width="10%" class="text-dark">Address</th>
                                                 <th width="10%" class="text-dark">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($estates as $e)
+                                            <tr>
+                                                <td class="align-middle">{{ $e->type }}</td>
+                                                <td class="align-middle text-center">{{ $e->bank_id }}</td>
+                                                <td class="align-middle text-center">{{ $e->account_number }}</td>
+                                                <td class="text-center align-middle">{{ $e->size }}</td>
+                                                <td class="text-center align-middle">Address</td>
+                                                <td class="text-center align-middle">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-xs btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Actions
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" id="estate" onClick="modalProperty(this.id, {{ $e->id }})" href="javascript:void(0)">Edit</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -63,6 +82,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($hire_purchases as $h)
+                                        <tr>
+                                            <td class="align-middle">{{ $h->brand }} {{ $h->model }}</td>
+                                            <td class="align-middle text-center">{{ $h->year }}</td>
+                                            <td class="align-middle text-center">{{ $h->colour }}</td>
+                                            <td class="text-center align-middle">{{ $h->bank_id }}</td>
+                                            <td class="text-center align-middle">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-xs btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Actions
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" id="hire-purchase" onClick="modalProperty(this.id, {{ $h->id }})" href="javascript:void(0)">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>

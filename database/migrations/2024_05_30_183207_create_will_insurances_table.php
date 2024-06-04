@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignUuid('will_id');
             $table->string('insurance');
             $table->string('provider')->nullable();
+            $table->integer('type');
+            $table->string('certificate_number')->nullable();
             $table->string('amount')->nullable();
             $table->json('beneficiaries')->nullable();
             $table->timestamps();

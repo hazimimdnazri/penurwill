@@ -11,6 +11,7 @@ use App\Models\WillBank;
 use App\Models\WillInvestment;
 use App\Models\WillInsurance;
 use App\Models\WillBusiness;
+use App\Models\WillRealEstate;
 use App\Models\WillHirePurchase;
 use App\Models\WillJewelry;
 use App\Models\WillOtherProperty;
@@ -50,8 +51,10 @@ class WillController extends Controller
                 return view('backend.user.wills.components.tab-'.$request->tab, compact('bankings', 'investments', 'business', 'insurances'));
                 break;
             
-            case 'property':                
-                return view('backend.user.wills.components.tab-'.$request->tab);
+            case 'property':
+                $estates = WillRealEstate::where('will_id', auth()->user()->r_will->id)->get();        
+                $hire_purchases = WillHirePurchase::where('will_id', auth()->user()->r_will->id)->get();        
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('estates', 'hire_purchases'));
                 break;
             
             case 'dnl':                
@@ -117,6 +120,22 @@ class WillController extends Controller
                 }
                 break;
             
+            case 'estate':
+                $beneficiary = $beneficiary_id ? json_decode(WillRealEstate::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillRealEstate::findorfail($item_id);
+                }
+                break;
+            
+            case 'hire_purchase':
+                $beneficiary = $beneficiary_id ? json_decode(WillHirePurchase::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillHirePurchase::findorfail($item_id);
+                }
+                break;
+            
             default:
                 break;
         }
@@ -148,94 +167,48 @@ class WillController extends Controller
         switch ($request->tab) {
             case 'banking':
                 $item = WillBank::findorfail($request->item_id);
-                if($item->beneficiaries){
-                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
-
-                    if($ex){
-                        $new = json_decode($item->beneficiaries, true);
-                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
-                        $new[$request->beneficiary_id]['remark'] = $request->remark;
-                        $arr = $new;
-
-                    } else {
-                        $arr = json_decode($item->beneficiaries, true);
-                        $arr[$request->beneficiary_id] = [
-                            'percentage' => $request->percentage,
-                            'remark' => $request->remark,
-                        ];
-                    }
-                }
-                
                 break;
 
             case 'investment':
                 $item = WillInvestment::findorfail($request->item_id);
-                if($item->beneficiaries){
-                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
-
-                    if($ex){
-                        $new = json_decode($item->beneficiaries, true);
-                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
-                        $new[$request->beneficiary_id]['remark'] = $request->remark;
-                        $arr = $new;
-
-                    } else {
-                        $arr = json_decode($item->beneficiaries, true);
-                        $arr[$request->beneficiary_id] = [
-                            'percentage' => $request->percentage,
-                            'remark' => $request->remark,
-                        ];
-                    }
-                }
-                
                 break;
 
             case 'business':
                 $item = WillBusiness::findorfail($request->item_id);
-                if($item->beneficiaries){
-                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
-
-                    if($ex){
-                        $new = json_decode($item->beneficiaries, true);
-                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
-                        $new[$request->beneficiary_id]['remark'] = $request->remark;
-                        $arr = $new;
-
-                    } else {
-                        $arr = json_decode($item->beneficiaries, true);
-                        $arr[$request->beneficiary_id] = [
-                            'percentage' => $request->percentage,
-                            'remark' => $request->remark,
-                        ];
-                    }
-                }
-                
                 break;
             
             case 'insurance':
                 $item = WillInsurance::findorfail($request->item_id);
-                if($item->beneficiaries){
-                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
+                break;
 
-                    if($ex){
-                        $new = json_decode($item->beneficiaries, true);
-                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
-                        $new[$request->beneficiary_id]['remark'] = $request->remark;
-                        $arr = $new;
-
-                    } else {
-                        $arr = json_decode($item->beneficiaries, true);
-                        $arr[$request->beneficiary_id] = [
-                            'percentage' => $request->percentage,
-                            'remark' => $request->remark,
-                        ];
-                    }
-                }
-                
+            case 'estate':
+                $item = WillRealEstate::findorfail($request->item_id);
+                break;
+            
+            case 'hire_purchase':
+                $item = WillHirePurchase::findorfail($request->item_id);
                 break;
             
             default:
                 break;
+        }
+
+        if($item->beneficiaries){
+            $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
+
+            if($ex){
+                $new = json_decode($item->beneficiaries, true);
+                $new[$request->beneficiary_id]['percentage'] = $request->percentage;
+                $new[$request->beneficiary_id]['remark'] = $request->remark;
+                $arr = $new;
+
+            } else {
+                $arr = json_decode($item->beneficiaries, true);
+                $arr[$request->beneficiary_id] = [
+                    'percentage' => $request->percentage,
+                    'remark' => $request->remark,
+                ];
+            }
         }
 
         $item->beneficiaries = $arr;
@@ -358,7 +331,22 @@ class WillController extends Controller
     }
 
     public function storeHirePurchase(Request $request){
-        return $request;
+        $hire_purchase = isset($request->id) ? WillHirePurchase::findorfail($request->id) : new WillHirePurchase;
+        $hire_purchase->brand = strtoupper($request->brand);
+        $hire_purchase->model = strtoupper($request->model);
+        $hire_purchase->will_id = auth()->user()->r_will->id;
+        $hire_purchase->type = $request->type;
+        $hire_purchase->year = $request->year;
+        $hire_purchase->colour = strtoupper($request->colour);
+        $hire_purchase->registration_number = strtoupper($request->registration_number);
+        $hire_purchase->bank_id = $request->bank_id;
+
+        if($hire_purchase->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Hire purchase information has been saved.'
+            ];
+        }
     }
 
     public function modalJewelry(Request $request){
@@ -388,13 +376,33 @@ class WillController extends Controller
     }
 
     public function modalEstate(Request $request){
+        $estate = isset($request->id) ? WillRealEstate::findorfail($request->id) : new WillRealEstate;
         $banks = LBank::all();
         $states = LState::all();
-        return view('backend.user.wills.components.modal-estate', compact('banks', 'states'));
+        return view('backend.user.wills.components.modal-estate', compact('estate', 'banks', 'states'));
     }
 
     public function storeEstate(Request $request){
-        return $request;
+        $estate = isset($request->id) ? WillRealEstate::findorfail($request->id) : new WillRealEstate;
+        $estate->branch = strtoupper($request->branch);
+        $estate->account_number = strtoupper($request->account_number);
+        $estate->will_id = auth()->user()->r_will->id;
+        $estate->bank_id = $request->bank_id;
+        $estate->type = $request->type;
+        $estate->size = $request->size;
+        $estate->address_1 = strtoupper($request->address_1);
+        $estate->address_2 = strtoupper($request->address_2);
+        $estate->address_3 = strtoupper($request->address_3);
+        $estate->city = strtoupper($request->city);
+        $estate->zipcode = $request->zipcode;
+        $estate->state_id = $request->state_id;
+
+        if($estate->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Real estate information has been saved.'
+            ];
+        }
     }
 
     public function modalDebt(Request $request){
