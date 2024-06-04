@@ -16,6 +16,9 @@ use App\Models\WillHirePurchase;
 use App\Models\WillJewelry;
 use App\Models\WillOtherProperty;
 use App\Models\WillDigitalAsset;
+use App\Models\WillExecutor;
+use App\Models\WillWitness;
+use App\Models\WillDebt;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class WillController extends Controller
@@ -62,8 +65,9 @@ class WillController extends Controller
                 return view('backend.user.wills.components.tab-'.$request->tab, compact('estates', 'hire_purchases', 'jewelries', 'others', 'digitals'));
                 break;
             
-            case 'dnl':                
-                return view('backend.user.wills.components.tab-'.$request->tab);
+            case 'dnl':
+                $debts = WillDebt::where('will_id', auth()->user()->r_will->id)->get();        
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('debts'));
                 break;
             
             case 'testament':                
@@ -71,11 +75,13 @@ class WillController extends Controller
                 break;
             
             case 'executor':                
-                return view('backend.user.wills.components.tab-'.$request->tab);
+                $executors = WillExecutor::where('will_id', auth()->user()->r_will->id)->get();
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('executors'));
                 break;
             
-            case 'witness':                
-                return view('backend.user.wills.components.tab-'.$request->tab, compact('states'));
+            case 'witness':
+                $witnesses = WillWitness::where('will_id', auth()->user()->r_will->id)->get();
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('states', 'witnesses'));
                 break;
             
             default:
@@ -360,6 +366,7 @@ class WillController extends Controller
         $insurance->provider = strtoupper($request->provider);
         $insurance->will_id = auth()->user()->r_will->id;
         $insurance->amount = $request->amount;
+        $insurance->type = $request->type;
 
         if($insurance->save()){
             return [
@@ -487,20 +494,75 @@ class WillController extends Controller
     }
 
     public function modalDebt(Request $request){
-        $banks = LBank::all();
-        return view('backend.user.wills.components.modal-debt', compact('banks'));
+        $debt = isset($request->id) ? WillDebt::findorfail($request->id) : new WillDebt;
+        return view('backend.user.wills.components.modal-debt', compact('debt'));
     }
 
     public function storeDebt(Request $request){
-        return $request;
+        $debt = isset($request->id) ? WillDebt::findorfail($request->id) : new WillDebt;
+        $debt->will_id = auth()->user()->r_will->id;
+        $debt->name = strtoupper($request->name);
+        $debt->remark = strtoupper($request->remark);
+        $debt->amount = $request->amount;
+
+        if($debt->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Debts and liabilities information has been saved.'
+            ];
+        }
     }
 
     public function modalExecutor(Request $request){
-        return view('backend.user.wills.components.modal-executor');
+        $states = LState::all();
+        $executor = isset($request->id) ? WillExecutor::findorfail($request->id) : new WillExecutor;
+        return view('backend.user.wills.components.modal-executor', compact('states', 'executor'));
     }
 
     public function storeExecutor(Request $request){
-        return $request;
+        $executor = isset($request->id) ? WillExecutor::findorfail($request->id) : new WillExecutor;
+        $executor->name = strtoupper($request->name);
+        $executor->ic = $request->ic;
+        $executor->phone_mobile = $request->phone_mobile;
+        $executor->phone_office = $request->phone_office;
+        $executor->address_1 = strtoupper($request->address_1);
+        $executor->address_2 = strtoupper($request->address_2);
+        $executor->address_3 = strtoupper($request->address_3);
+        $executor->city = strtoupper($request->city);
+        $executor->zipcode = $request->zipcode;
+        $executor->state_id = $request->state_id;
+        $executor->will_id = auth()->user()->r_will->id;
+
+        if($executor->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Executor information has been saved.'
+            ];
+        }
+    }
+
+    public function storeWitness(Request $request){
+        for($i = 0; $i < 2; $i++){
+            $witness = isset($request->id[$i]) ? WillWitness::findorfail($request->id[$i]) : new WillWitness;
+            $witness->name = strtoupper($request->name[$i]);
+            $witness->ic = $request->ic[$i];
+            $witness->phone_mobile = $request->phone_mobile[$i];
+            $witness->phone_office = $request->phone_office[$i];
+            $witness->address_1 = strtoupper($request->address_1[$i]);
+            $witness->address_2 = strtoupper($request->address_2[$i]);
+            $witness->address_3 = strtoupper($request->address_3[$i]);
+            $witness->zipcode = $request->zipcode[$i];
+            $witness->city = strtoupper($request->city[$i]);
+            $witness->state_id = $request->state_id[$i];
+            $witness->will_id = auth()->user()->r_will->id;
+            
+            $witness->save();
+        }
+
+        return [
+            'status' => 'success',
+            'message' => 'Witness information has been saved.'
+        ];
     }
 
     public function willGenerate($id){

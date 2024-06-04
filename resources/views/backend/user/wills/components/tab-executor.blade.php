@@ -13,7 +13,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" onClick="modalDebt()" class="btn btn-xs btn-success">Add Executor</button>
+                                        <button type="button" onClick="modalExecutor()" class="btn btn-xs btn-success">Add Executor</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -21,14 +21,43 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="25%" class="text-dark">Name</th>
-                                                <th width="15%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Bank</th>
-                                                <th width="20%" class="text-dark">Account Number</th>
-                                                <th width="10%" class="text-dark">Amount</th>
-                                                <th width="10%" class="text-dark">Action</th>
+                                                <th width="15%" class="text-dark text-center">I.C</th>
+                                                <th width="10%" class="text-dark text-center">Phone Mobile</th>
+                                                <th width="10%" class="text-dark text-center">Phone Office</th>
+                                                <th width="30%" class="text-dark text-center">Address</th>
+                                                <th width="10%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($executors as $e)
+                                        <tr>
+                                            <td class="align-middle">{{ $e->name }}</td>
+                                            <td class="align-middle text-center">{{ $e->ic }}</td>
+                                            <td class="align-middle text-center">{{ $e->phone_mobile }}</td>
+                                            <td class="text-center align-middle">{{ $e->phone_office }}</td>
+                                            <td class="text-center align-middle">
+                                                {{ $e->address_1 }}<br>
+                                                @if($e->address_2)
+                                                {{ $e->address_2 }}, <br>
+                                                @endif
+                                                @if($e->address_3)
+                                                {{ $e->address_3 }}, <br>
+                                                @endif
+                                                {{ $e->zipcode }}, {{ $e->city }},<br>
+                                                {{ strtoupper($e->r_state->state) }}
+                                            </td>
+                                            <td class="text-center align-middle">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-xs btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Actions
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" onClick="modalExecutor({{ $e->id }})" href="javascript:void(0)">Edit</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -51,7 +80,7 @@
         bFilter: false,
     })
 
-    modalDebt = (button_id, id) => {
+    modalExecutor = (id) => {
         runLoader('load')
         
         $.ajax({
@@ -60,7 +89,6 @@
             data: {
                 '_token': '{{ csrf_token() }}',
                 'id': id,
-                'will_id': "{{ request()->id }}"
             }
         }).done((response) => {
             $("#variable_2").html(response)
@@ -71,6 +99,6 @@
     
     next = () => {
         runLoader('load')
-        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=benefits') }}");
+        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=witness') }}");
     }
 </script>

@@ -17,12 +17,16 @@
 
 <div style="text-align: left; width: 100%; margin-top: 10px">
     <p><b><u>EXUCUTOR APPOINTMENT</u></b></p>
-    <span>I appoint [name], ([ic_no]) of [address] in the State of [state], Malaysia</span><br>
+    <span>I appoint <b>{{ auth()->user()->r_will->r_executors->first()->name }}</b>, <b>({{ auth()->user()->r_will->r_executors->first()->ic }})</b> 
+    of {{ auth()->user()->r_will->r_executors->first()->address_1  }} in the State of {{ auth()->user()->r_will->r_executors->first()->r_state->state }} , Malaysia</span><br>
+
+    @if(auth()->user()->r_will->r_executors->count() > 1)
     <span><b>and</b></span><br>
+    @forea()
     <span>[name], ([ic_no]) of [address] in the State of [state], Malaysia</span><br>
     <span>to be the Executor(s) of this my Will and Trustee(s) of my Estate. If he/she/they predecease me of are unable or unwilling to fulfill this role then</span><br>
-    <span>I appoint [name], ([ic]) of [address] in the State of [state], Malaysia as Executor and Trustee of my Estate.  
-    </span>
+    <span>I appoint [name], ([ic]) of [address] in the State of [state], Malaysia as Executor and Trustee of my Estate.</span>
+    @endif
 </div>
 
 <div style="text-align: left; width: 100%; margin-top: 10px">

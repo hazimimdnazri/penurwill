@@ -89,6 +89,7 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('store-debt', [WillController::class, 'storeDebt']);
             Route::post('modal-executor', [WillController::class, 'modalExecutor']);
             Route::post('store-executor', [WillController::class, 'storeExecutor']);
+            Route::post('store-witness', [WillController::class, 'storeWitness']);
         });
     });
 });

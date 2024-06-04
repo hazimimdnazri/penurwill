@@ -46,8 +46,8 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <label class="form-label">Address Line 1</label>
-                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->address_1 }}" name="address_1">
+                        <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
+                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->address_1 }}" name="address_1" required>
                     </div>
                     <div class="col-md-12">
                         <label class="form-label">Address Line 2</label>
@@ -58,16 +58,16 @@
                         <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->address_3 }}" name="address_3">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Zipcode </label>
-                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" class="form-control" value="{{ $estate->zipcode }}" name="zipcode">
+                        <label class="form-label">Zipcode <span class="text-danger">*</span></label>
+                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" class="form-control" value="{{ $estate->zipcode }}" name="zipcode" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">City </label>
-                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->city }}" name="city">
+                        <label class="form-label">City <span class="text-danger">*</span></label>
+                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->city }}" name="city" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">State </label>
-                        <select name="state_id" class="form-select select2">
+                        <label class="form-label">State <span class="text-danger">*</span></label>
+                        <select name="state_id" class="form-select select2" required>
                             @foreach($states as $s)
                             <option value="{{ $s->id }}" {{ $estate->state_id == $s->id ? 'selected' : NULL }}>{{ strtoupper($s->state) }}</option>
                             @endforeach

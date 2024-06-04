@@ -10,4 +10,8 @@ class Will extends Model
 {
     use HasFactory;
     use HasUuids;
+
+    public function r_executors(){
+        return $this->hasMany(WillExecutor::class, 'will_id');
+    }
 }

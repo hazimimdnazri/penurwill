@@ -18,9 +18,9 @@
                     <div class="col-md-6">
                         <label class="form-label">Type</label>
                         <select name="type" class="form-select select2">
-                            <option value="">Life Insurance</option>
-                            <option value="">Health Insurance</option>
-                            <option value="">Takaful</option>
+                            <option value="1">Life Insurance</option>
+                            <option value="2">Health Insurance</option>
+                            <option value="3">Takaful</option>
                         </select>
                     </div>
                     <div class="col-md-6">

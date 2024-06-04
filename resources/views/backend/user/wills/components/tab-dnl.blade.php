@@ -20,15 +20,30 @@
                                     <table id="tableDebt" class="table table-bordered border-top border-1 border-secondary" width="100%">
                                         <thead>
                                             <tr class="bg-light text-center">
-                                                <th width="25%" class="text-dark">Name</th>
-                                                <th width="15%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Bank</th>
-                                                <th width="20%" class="text-dark">Account Number</th>
+                                                <th width="40%" class="text-dark">Name</th>
                                                 <th width="10%" class="text-dark">Amount</th>
+                                                <th width="40%" class="text-dark">Remark</th>
                                                 <th width="10%" class="text-dark">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($debts as $d)
+                                            <tr>
+                                                <td class="align-middle">{{ $d->name }}</td>
+                                                <td class="text-center align-middle">{{ $d->amount ? number_format($d->amount, 2) : NULL }}</td>
+                                                <td class="align-middle">{{ $d->remark }}</td>
+                                                <td class="text-center align-middle">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-xs btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            Actions
+                                                        </button>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" onClick="modalDebt({{ $d->id }})" href="javascript:void(0)">Edit</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -51,7 +66,7 @@
         bFilter: false,
     })
 
-    modalDebt = (button_id, id) => {
+    modalDebt = (id) => {
         runLoader('load')
         
         $.ajax({
@@ -60,7 +75,6 @@
             data: {
                 '_token': '{{ csrf_token() }}',
                 'id': id,
-                'will_id': "{{ request()->id }}"
             }
         }).done((response) => {
             $("#variable_2").html(response)

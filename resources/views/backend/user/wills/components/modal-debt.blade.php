@@ -9,20 +9,20 @@
                     @csrf
                     <div class="col-md-6 needs-validation">
                         <label class="form-label">Debts & Liabilities Name </label>
-                        <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="">
+                        <input type="text" style="text-transform: uppercase" name="name" class="form-control" value="{{ $debt->name }}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Total Amount </label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1">RM</span>
-                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="">
+                            <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="{{ $debt->amount }}">
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label class="form-label">Remark </label>
-                        <textarea name="remark" class="form-control" rows="5"></textarea>
+                        <textarea name="remark" class="form-control" rows="5">{{ $debt->remark }}</textarea>
                     </div>
-                    <input type="hidden" name="banking_id" value="">
+                    <input type="hidden" name="id" value="{{ $debt->id }}">
                 </form>
             </div>
             <div class="modal-footer">
@@ -42,7 +42,7 @@
             runLoader('save')
 
             $.ajax({
-                url: "{{ url('client/my-will/ajax/store-banking') }}",
+                url: "{{ url('client/my-will/ajax/store-debt') }}",
                 type: 'POST',
                 data: formData,
                 cache: false,
