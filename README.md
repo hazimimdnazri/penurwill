@@ -11,11 +11,6 @@ Future benefits another tab.
 Witness different tab
 add contact number to witness (*)
 Personal Property, pecah jadi hire purchase dengan item2 lain
-Add business into the financial
-    - Name
-    - comp reg number
-    - Amount of share
-    - Beneficiary
 
 Add property word into real estate
 Specify if 'others selected'

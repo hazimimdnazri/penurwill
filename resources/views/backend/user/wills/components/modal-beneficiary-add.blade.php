@@ -29,7 +29,7 @@
                     </div>
                     <input type="hidden" name="id" value="{{ $beneficiary_id }}">
                     <input type="hidden" name="item_id" value="{{ $item_id }}">
-                    <input type="hidden" name="tab" value="banking">
+                    <input type="hidden" name="tab" value="{{ $modal }}">
                 </form>
             </div>
             <div class="modal-footer">

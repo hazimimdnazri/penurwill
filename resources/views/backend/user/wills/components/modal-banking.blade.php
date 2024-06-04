@@ -119,7 +119,7 @@
             data: {
                 '_token': '{{ csrf_token() }}',
                 'id': id,
-                'item_id': {{ $bank->id }},
+                'item_id': "{{ $bank->id }}",
                 'modal': 'banking'
             }
         }).done((response) => {
@@ -138,7 +138,7 @@
             data: {
                 '_token': '{{ csrf_token() }}',
                 'id': id,
-                'item_id': {{ $bank->id }},
+                'item_id': "{{ $bank->id }}",
                 'modal': 'banking',
                 'action': 'delete'
             }

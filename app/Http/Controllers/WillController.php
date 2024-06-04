@@ -44,7 +44,10 @@ class WillController extends Controller
             
             case 'financial':
                 $bankings = WillBank::where('will_id', auth()->user()->r_will->id)->get();
-                return view('backend.user.wills.components.tab-'.$request->tab, compact('bankings'));
+                $investments = WillInvestment::where('will_id', auth()->user()->r_will->id)->get();
+                $business = WillBusiness::where('will_id', auth()->user()->r_will->id)->get();
+                $insurances = WillInsurance::where('will_id', auth()->user()->r_will->id)->get();
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('bankings', 'investments', 'business', 'insurances'));
                 break;
             
             case 'property':                
@@ -79,13 +82,38 @@ class WillController extends Controller
         $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $item_id = $request->item_id;
         $beneficiary_id = $request->id;
+        $modal = $request->modal;
 
-        switch ($request->modal){
+        switch ($modal){
             case 'banking':
                 $beneficiary = $beneficiary_id ? json_decode(WillBank::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
 
                 if($request->action == 'delete'){
                     $item = WillBank::findorfail($item_id);
+                }
+                break;
+            
+            case 'investment':
+                $beneficiary = $beneficiary_id ? json_decode(WillInvestment::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillInvestment::findorfail($item_id);
+                }
+                break;
+            
+            case 'business':
+                $beneficiary = $beneficiary_id ? json_decode(WillBusiness::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillBusiness::findorfail($item_id);
+                }
+                break;
+            
+            case 'insurance':
+                $beneficiary = $beneficiary_id ? json_decode(WillInsurance::findorfail($item_id)->beneficiaries, true)[$beneficiary_id] : NULL;
+
+                if($request->action == 'delete'){
+                    $item = WillInsurance::findorfail($item_id);
                 }
                 break;
             
@@ -106,7 +134,7 @@ class WillController extends Controller
             }
         }
 
-        return view('backend.user.wills.components.modal-beneficiary-add', compact('beneficiaries', 'item_id', 'beneficiary', 'beneficiary_id'));
+        return view('backend.user.wills.components.modal-beneficiary-add', compact('beneficiaries', 'item_id', 'beneficiary', 'beneficiary_id', 'modal'));
     }
 
     public function storeBeneficiaryAdd(Request $request){
@@ -120,6 +148,72 @@ class WillController extends Controller
         switch ($request->tab) {
             case 'banking':
                 $item = WillBank::findorfail($request->item_id);
+                if($item->beneficiaries){
+                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
+
+                    if($ex){
+                        $new = json_decode($item->beneficiaries, true);
+                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
+                        $new[$request->beneficiary_id]['remark'] = $request->remark;
+                        $arr = $new;
+
+                    } else {
+                        $arr = json_decode($item->beneficiaries, true);
+                        $arr[$request->beneficiary_id] = [
+                            'percentage' => $request->percentage,
+                            'remark' => $request->remark,
+                        ];
+                    }
+                }
+                
+                break;
+
+            case 'investment':
+                $item = WillInvestment::findorfail($request->item_id);
+                if($item->beneficiaries){
+                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
+
+                    if($ex){
+                        $new = json_decode($item->beneficiaries, true);
+                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
+                        $new[$request->beneficiary_id]['remark'] = $request->remark;
+                        $arr = $new;
+
+                    } else {
+                        $arr = json_decode($item->beneficiaries, true);
+                        $arr[$request->beneficiary_id] = [
+                            'percentage' => $request->percentage,
+                            'remark' => $request->remark,
+                        ];
+                    }
+                }
+                
+                break;
+
+            case 'business':
+                $item = WillBusiness::findorfail($request->item_id);
+                if($item->beneficiaries){
+                    $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
+
+                    if($ex){
+                        $new = json_decode($item->beneficiaries, true);
+                        $new[$request->beneficiary_id]['percentage'] = $request->percentage;
+                        $new[$request->beneficiary_id]['remark'] = $request->remark;
+                        $arr = $new;
+
+                    } else {
+                        $arr = json_decode($item->beneficiaries, true);
+                        $arr[$request->beneficiary_id] = [
+                            'percentage' => $request->percentage,
+                            'remark' => $request->remark,
+                        ];
+                    }
+                }
+                
+                break;
+            
+            case 'insurance':
+                $item = WillInsurance::findorfail($request->item_id);
                 if($item->beneficiaries){
                     $ex = json_decode($item->beneficiaries, true)[$request->beneficiary_id] ?? NULL;
 
@@ -202,7 +296,19 @@ class WillController extends Controller
     }
 
     public function storeInvestment(Request $request){
-        return $request;
+        $investment = isset($request->id) ? WillInvestment::findorfail($request->id) : new WillInvestment;
+        $investment->investment = strtoupper($request->investment);
+        $investment->will_id = auth()->user()->r_will->id;
+        $investment->type = $request->type;
+        $investment->share_amount = $request->share_amount;
+        $investment->share_percentage = $request->share_percentage;
+
+        if($investment->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Investment information has been saved.'
+            ];
+        }
     }
 
     public function modalBusiness(Request $request){
@@ -211,7 +317,18 @@ class WillController extends Controller
     }
 
     public function storeBusiness(Request $request){
-        return $request;
+        $business = isset($request->id) ? WillBusiness::findorfail($request->id) : new WillBusiness;
+        $business->business = strtoupper($request->business);
+        $business->will_id = auth()->user()->r_will->id;
+        $business->registration_number = strtoupper($request->registration_number);
+        $business->amount = $request->amount;
+
+        if($business->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Business information has been saved.'
+            ];
+        }
     }
 
     public function modalInsurance(Request $request){
@@ -220,7 +337,18 @@ class WillController extends Controller
     }
 
     public function storeInsurance(Request $request){
-        return $request;
+        $insurance = isset($request->id) ? WillInsurance::findorfail($request->id) : new WillInsurance;
+        $insurance->insurance = strtoupper($request->insurance);
+        $insurance->provider = strtoupper($request->provider);
+        $insurance->will_id = auth()->user()->r_will->id;
+        $insurance->amount = $request->amount;
+
+        if($insurance->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Insurance information has been saved.'
+            ];
+        }
     }
 
     public function modalHirePurchase(Request $request){
