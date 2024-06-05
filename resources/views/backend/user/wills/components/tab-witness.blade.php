@@ -147,6 +147,7 @@
                 </form>
                 <div class="col-md-12 text-center mt-0">
                     <button onClick="submit()" class="btn btn-primary">Save & Finish</button>
+                    <button onClick="generateWill()" class="btn btn-success">Generate Will</button>
                 </div>
             </div>
         </div>
@@ -198,5 +199,37 @@
                 validateGroup[i].classList.add('was-validated');
             }
         }
+    }
+
+    generateWill = (id) => {
+        Swal.fire({
+            title: "Generate your will?",
+            text: "Please check your information again. Make sure all information is correct. You will need to pay a small amout of fee in order to edit your will after it has been generated.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#47bd9a",
+            cancelButtonColor: "#e74c5e",
+            confirmButtonText: "Yes, generate"
+        }).then((result) => {
+            if(result.value){
+                runLoader('load')
+                
+                $.ajax({
+                    type:"POST",
+                    url: "{{ url('client/my-will/ajax/validate-will') }}",
+                    data: {
+                        "_token" : "{{ csrf_token() }}",
+                        "id" : id,
+                        "action" : 'delete'
+                    }
+                }).done((response) => {
+                    if(response.status == 'success'){
+                        location.replace(`{{ url('client/my-will/${response.will_id}/generate') }}`)
+                    } else {
+                        runAlertError(response.message)
+                    }
+                });
+            }
+        });
     }
 </script>

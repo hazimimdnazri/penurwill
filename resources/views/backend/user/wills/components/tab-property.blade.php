@@ -22,19 +22,19 @@
                                     <table id="tableEstate" class="table table-bordered border-top border-1 border-secondary" width="100%">
                                         <thead>
                                             <tr class="bg-light text-center">
-                                                <th width="15%" class="text-dark">Classification</th>
-                                                <th width="30%" class="text-dark">Bank</th>
-                                                <th width="20%" class="text-dark">Account</th>
-                                                <th width="15%" class="text-dark">Size</th>
-                                                <th width="10%" class="text-dark">Address</th>
+                                                <th width="15%" class="text-dark text-center">Classification</th>
+                                                <th width="20%" class="text-dark text-center">Bank</th>
+                                                <th width="20%" class="text-dark text-center">Account</th>
+                                                <th width="15%" class="text-dark text-center">Size</th>
+                                                <th width="20%" class="text-dark">Address</th>
                                                 <th width="10%" class="text-dark">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($estates as $e)
                                             <tr>
-                                                <td class="align-middle">{{ $e->type }}</td>
-                                                <td class="align-middle text-center">{{ $e->bank_id }}</td>
+                                                <td class="align-middle text-center">{{ $e->getType() }}</td>
+                                                <td class="align-middle text-center">{{ $e->r_bank->bank }}</td>
                                                 <td class="align-middle text-center">{{ $e->account_number }}</td>
                                                 <td class="text-center align-middle">{{ $e->size }}</td>
                                                 <td class="text-center align-middle">Address</td>
@@ -75,10 +75,10 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="30%" class="text-dark">Model</th>
-                                                <th width="20%" class="text-dark">Year</th>
-                                                <th width="20%" class="text-dark">Colour</th>
-                                                <th width="15%" class="text-dark">Loan Bank</th>
-                                                <th width="15%" class="text-dark">Action</th>
+                                                <th width="10%" class="text-dark text-center">Year</th>
+                                                <th width="20%" class="text-dark text-center">Colour</th>
+                                                <th width="25%" class="text-dark text-center">Bank</th>
+                                                <th width="15%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -87,7 +87,7 @@
                                             <td class="align-middle">{{ $h->brand }} {{ $h->model }}</td>
                                             <td class="align-middle text-center">{{ $h->year }}</td>
                                             <td class="align-middle text-center">{{ $h->colour }}</td>
-                                            <td class="text-center align-middle">{{ $h->bank_id }}</td>
+                                            <td class="text-center align-middle">{{ $h->r_bank->bank }}</td>
                                             <td class="text-center align-middle">
                                                 <div class="dropdown">
                                                     <button class="btn btn-xs btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -125,15 +125,15 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="40%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Weight (gram)</th>
-                                                <th width="20%" class="text-dark">Quantity (pcs)</th>
-                                                <th width="20%" class="text-dark">Action</th>
+                                                <th width="20%" class="text-dark text-center">Weight (gram)</th>
+                                                <th width="20%" class="text-dark text-center">Quantity (pcs)</th>
+                                                <th width="20%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($jewelries as $j)
                                         <tr>
-                                            <td class="align-middle">{{ $j->type }}</td>
+                                            <td class="align-middle">{{ $j->getType() }}</td>
                                             <td class="align-middle text-center">{{ $j->weight }}</td>
                                             <td class="align-middle text-center">{{ $j->quantity }}</td>
                                             <td class="text-center align-middle">
@@ -173,15 +173,15 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="40%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Worth (RM)</th>
-                                                <th width="20%" class="text-dark">Quantity (pcs)</th>
-                                                <th width="20%" class="text-dark">Action</th>
+                                                <th width="20%" class="text-dark text-center">Worth (RM)</th>
+                                                <th width="20%" class="text-dark text-center">Quantity (pcs)</th>
+                                                <th width="20%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($others as $o)
                                         <tr>
-                                            <td class="align-middle">{{ $o->type }}</td>
+                                            <td class="align-middle">{{ $o->getType() }}</td>
                                             <td class="align-middle text-center">{{ number_format($o->worth, 2) }}</td>
                                             <td class="align-middle text-center">{{ $o->quantity }}</td>
                                             <td class="text-center align-middle">
@@ -222,15 +222,15 @@
                                             <tr class="bg-light text-center">
                                                 <th width="30%" class="text-dark">Type</th>
                                                 <th width="20%" class="text-dark">Name</th>
-                                                <th width="15%" class="text-dark">Provider</th>
-                                                <th width="20%" class="text-dark">URL</th>
-                                                <th width="15%" class="text-dark">Action</th>
+                                                <th width="15%" class="text-dark text-center">Provider</th>
+                                                <th width="20%" class="text-dark text-center">URL</th>
+                                                <th width="15%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($digitals as $d)
                                         <tr>
-                                            <td class="align-middle">{{ $d->type }}</td>
+                                            <td class="align-middle">{{ $d->getType() }}</td>
                                             <td class="align-middle text-center">{{ $d->name }}</td>
                                             <td class="align-middle text-center">{{ $d->provider }}</td>
                                             <td class="align-middle text-center">{{ $d->url }}</td>

@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class WillHirePurchase extends Model
 {
     use HasFactory;
+
+    public function r_bank(){
+        return $this->belongsTo(LBank::class, 'bank_id');
+    }
 }

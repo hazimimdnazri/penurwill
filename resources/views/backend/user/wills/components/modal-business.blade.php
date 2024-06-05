@@ -13,11 +13,11 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Business Nature <span class="text-danger">*</span></label>
-                        <select name="bank_id" class="form-select select2">
-                            <option value="">Type 1</option>
-                            <option value="">Type 2</option>
-                            <option value="">Type 3</option>
-                            <option value="">Type 4</option>
+                        <select name="type" class="form-select select2">
+                            <option value="1">Type 1</option>
+                            <option value="2">Type 2</option>
+                            <option value="3">Type 3</option>
+                            <option value="4">Type 4</option>
                         </select>
                     </div>
                     <div class="col-md-4">

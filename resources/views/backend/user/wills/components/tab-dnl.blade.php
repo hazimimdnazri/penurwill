@@ -20,10 +20,10 @@
                                     <table id="tableDebt" class="table table-bordered border-top border-1 border-secondary" width="100%">
                                         <thead>
                                             <tr class="bg-light text-center">
-                                                <th width="40%" class="text-dark">Name</th>
-                                                <th width="10%" class="text-dark">Amount</th>
-                                                <th width="40%" class="text-dark">Remark</th>
-                                                <th width="10%" class="text-dark">Action</th>
+                                                <th width="35%" class="text-dark">Name</th>
+                                                <th width="20%" class="text-dark text-center">Amount (RM)</th>
+                                                <th width="30%" class="text-dark text-center">Remark</th>
+                                                <th width="15%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

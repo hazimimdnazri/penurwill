@@ -24,7 +24,7 @@
                                                 <th width="20%" class="text-dark text-center">Branch</th>
                                                 <th width="20%" class="text-dark text-center">Account Number</th>
                                                 <th width="15%" class="text-dark text-center">Amount (RM)</th>
-                                                <th width="15%" class="text-dark text-center">Action</th>
+                                                <th width="15%" class="text-dark text-center text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -71,17 +71,17 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="30%" class="text-dark">Name</th>
-                                                <th width="20%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Share Percentage</th>
-                                                <th width="15%" class="text-dark">Share Amount</th>
-                                                <th width="15%" class="text-dark">Action</th>
+                                                <th width="20%" class="text-dark text-center">Type</th>
+                                                <th width="20%" class="text-dark text-center">Share Percentage (%)</th>
+                                                <th width="15%" class="text-dark text-center">Share Amount (RM)</th>
+                                                <th width="15%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($investments as $i)
                                             <tr>
                                                 <td class="align-middle">{{ $i->investment }}</td>
-                                                <td class="align-middle text-center">{{ $i->type }}</td>
+                                                <td class="align-middle text-center">{{ $i->getType() }}</td>
                                                 <td class="align-middle text-center">{{ $i->share_percentage }}</td>
                                                 <td class="text-center align-middle">{{ $i->share_amount ? number_format($i->share_amount, 2) : NULL }}</td>
                                                 <td class="text-center align-middle">
@@ -121,17 +121,17 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="30%" class="text-dark">Name</th>
-                                                <th width="20%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Registration Number</th>
-                                                <th width="15%" class="text-dark">Amount</th>
-                                                <th width="15%" class="text-dark">Action</th>
+                                                <th width="20%" class="text-dark text-center">Type</th>
+                                                <th width="20%" class="text-dark text-center">Registration Number</th>
+                                                <th width="15%" class="text-dark text-center">Amount (RM)</th>
+                                                <th width="15%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($business as $b)
                                             <tr>
                                                 <td class="align-middle">{{ $b->business }}</td>
-                                                <td class="align-middle text-center">{{ $b->type }}</td>
+                                                <td class="align-middle text-center">{{ $b->getType() }}</td>
                                                 <td class="align-middle text-center">{{ $b->registration_number }}</td>
                                                 <td class="text-center align-middle">{{ $b->amount ? number_format($b->amount, 2) : NULL }}</td>
                                                 <td class="text-center align-middle">
@@ -171,18 +171,18 @@
                                         <thead>
                                             <tr class="bg-light text-center">
                                                 <th width="20%" class="text-dark">Name</th>
-                                                <th width="15%" class="text-dark">Type</th>
-                                                <th width="20%" class="text-dark">Provider</th>
-                                                <th width="20%" class="text-dark">Certificate Number</th>
-                                                <th width="15%" class="text-dark">Amount</th>
-                                                <th width="10%" class="text-dark">Action</th>
+                                                <th width="15%" class="text-dark text-center">Type</th>
+                                                <th width="20%" class="text-dark text-center">Provider</th>
+                                                <th width="20%" class="text-dark text-center">Certificate Number</th>
+                                                <th width="15%" class="text-dark text-center">Amount (RM)</th>
+                                                <th width="10%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($insurances as $i)
                                             <tr>
                                                 <td class="align-middle">{{ $i->insurance }}</td>
-                                                <td class="align-middle text-center"></td>
+                                                <td class="align-middle text-center">{{ $i->getType() }}</td>
                                                 <td class="align-middle text-center">{{ $i->provider }}</td>
                                                 <td class="text-center align-middle"></td>
                                                 <td class="text-center align-middle">{{ $i->amount ? number_format($i->amount, 2) : NULL }}</td>

@@ -81,7 +81,7 @@ class WillController extends Controller
             
             case 'witness':
                 $witnesses = WillWitness::where('will_id', auth()->user()->r_will->id)->get();
-                return view('backend.user.wills.components.tab-'.$request->tab, compact('states', 'witnesses'));
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('states', 'witnesses', 'will'));
                 break;
             
             default:
@@ -562,6 +562,13 @@ class WillController extends Controller
         return [
             'status' => 'success',
             'message' => 'Witness information has been saved.'
+        ];
+    }
+
+    public function validateWill(Request $request){
+        return [
+            'status' => 'success',
+            'will_id' => auth()->user()->r_will->id
         ];
     }
 

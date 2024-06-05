@@ -90,6 +90,7 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('modal-executor', [WillController::class, 'modalExecutor']);
             Route::post('store-executor', [WillController::class, 'storeExecutor']);
             Route::post('store-witness', [WillController::class, 'storeWitness']);
+            Route::post('validate-will', [WillController::class, 'validateWill']);
         });
     });
 });
