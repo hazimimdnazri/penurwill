@@ -9,6 +9,10 @@ class WillRealEstate extends Model
 {
     use HasFactory;
 
+    public function r_state(){
+        return $this->belongsTo(LState::class, 'state_id');
+    }
+
     public function r_bank(){
         return $this->belongsTo(LBank::class, 'bank_id');
     }
