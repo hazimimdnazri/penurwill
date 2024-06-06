@@ -11,6 +11,7 @@
                                 <div><b>ATTENTION:</b></div>
                                 <ul class="mb-0">
                                     <li class="mt-1">After inserting the property details, please click on the <b><u>EDIT</u></b> button on the <b><u>ACTION</u></b> column to enter the beneficiaries information.</li>
+                                    <li class="mt-1">Will can't be generated if beneficiary information is missing.</li>
                                 </ul>
                             </div>
                         </div>
