@@ -3,6 +3,18 @@
         <div class="card border-top border-0 border-4 border-secondary">
             <div class="card-body">
                 <div class="row mt-2">
+
+                    <div class="col-md-12 grid-margin stretch-card mb-3">
+                        <div class="col-md-12">
+                            <div style="border-left: 6px solid #0d60fd; padding: 10px; background: #e7f3ff">
+                                <div><b>ATTENTION:</b></div>
+                                <ul class="mb-0">
+                                    <li class="mt-1">After inserting the financial details, please click on the <b><u>EDIT</u></b> button on the <b><u>ACTION</u></b> column to enter the beneficiaries information.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-12 grid-margin stretch-card mb-3">
                         <div class="card">
                             <div class="card-body">
