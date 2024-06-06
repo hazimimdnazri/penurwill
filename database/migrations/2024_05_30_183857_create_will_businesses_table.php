@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('will_id');
             $table->string('business');
-            $table->integer('type')->default(1);
             $table->string('registration_number')->nullable();
             $table->string('amount')->nullable();
             $table->json('beneficiaries')->nullable();

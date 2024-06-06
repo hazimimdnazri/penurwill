@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('will_id');
             $table->string('jewelry')->nullable();
-            $table->integer('type')->default(1); // Car / Motorcycle / Lorry
+            $table->integer('type')->default(1);
             $table->float('weight')->nullable();
             $table->integer('quantity')->default(1);
             $table->json('beneficiaries')->nullable();

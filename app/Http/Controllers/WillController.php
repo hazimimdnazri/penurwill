@@ -515,8 +515,19 @@ class WillController extends Controller
 
     public function modalExecutor(Request $request){
         $states = LState::all();
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $executor = isset($request->id) ? WillExecutor::findorfail($request->id) : new WillExecutor;
-        return view('backend.user.wills.components.modal-executor', compact('states', 'executor'));
+        return view('backend.user.wills.components.modal-executor', compact('states', 'executor', 'beneficiaries'));
+    }
+
+    public function getBeneficiary(Request $request){
+        if($request->id != 0){
+            $beneficiary = WillBeneficiary::findorfail($request->id);
+            return [
+                'status' => 'success',
+                'data' => $beneficiary,
+            ];
+        }
     }
 
     public function storeExecutor(Request $request){

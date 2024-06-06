@@ -7,28 +7,19 @@
             <div class="modal-body">
                 <form id="businessData" class="row g-3">
                     @csrf
-                    <div class="col-md-12 needs-validation">
-                        <label class="form-label">Business Name </label>
+                    <div class="col-md-5 needs-validation">
+                        <label class="form-label">Business Name <span class="text-danger">*</span></label>
                         <input type="text" style="text-transform: uppercase" name="business" class="form-control" value="{{ $business->business }}">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Business Nature <span class="text-danger">*</span></label>
-                        <select name="type" class="form-select select2">
-                            <option value="1">Type 1</option>
-                            <option value="2">Type 2</option>
-                            <option value="3">Type 3</option>
-                            <option value="4">Type 4</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Business Registration Number </label>
+                        <label class="form-label">Registration Number </label>
                         <input type="text" style="text-transform: uppercase" name="registration_number" class="form-control" value="{{ $business->registration_number }}">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label class="form-label">Share Amount </label>
                         <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">RM</span>
                             <input type="text" style="text-transform: uppercase" name="amount" class="form-control" value="{{ $business->amount }}">
+                            <span class="input-group-text" id="basic-addon1">%</span>
                         </div>
                     </div>
                     <input type="hidden" name="id" value="{{ $business->id }}">

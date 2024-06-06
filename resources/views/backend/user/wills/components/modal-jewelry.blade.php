@@ -7,27 +7,27 @@
             <div class="modal-body">
                 <form id="investmentData" class="row g-3">
                     @csrf
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <label class="form-label">Type <span class="text-danger">*</span></label>
-                        <select name="type" class="form-select select2">
+                        <select name="type" class="form-select select2" onChange="selectType(this.value)">
                             <option value="1" {{ $jewelry->type == 1 ? 'selected' : NULL }}>Necklace</option>
                             <option value="2" {{ $jewelry->type == 2 ? 'selected' : NULL }}>Ring</option>
                             <option value="3" {{ $jewelry->type == 3 ? 'selected' : NULL }}>Bracelet</option>
                             <option value="4" {{ $jewelry->type == 4 ? 'selected' : NULL }}>Others</option>
                         </select>
                     </div>
-                    <div class="col-md-8 needs-validation">
+                    <div class="col-md-7">
                         <label class="form-label">Jewelry (If Others)</label>
-                        <input type="text" style="text-transform: uppercase" name="jewelry" class="form-control" value="{{ $jewelry->jewelry }}">
+                        <input type="text" style="text-transform: uppercase" id="input-other" name="jewelry" class="form-control" value="{{ $jewelry->jewelry }}" disabled>
                     </div>
-                    <div class="col-md-6 needs-validation">
+                    <div class="col-md-6">
                         <label class="form-label">Weight</label>
                         <div class="input-group">
                             <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" name="weight" class="form-control" value="{{ $jewelry->weight }}">
                             <span class="input-group-text" id="basic-addon1">gram</span>
                         </div>
                     </div>
-                    <div class="col-md-6 needs-validation">
+                    <div class="col-md-6">
                         <label class="form-label">Quantity</label>
                         <div class="input-group">
                             <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="3" name="quantity" class="form-control" value="{{ $jewelry->quantity }}">
@@ -105,6 +105,10 @@
         autoWidth: false,
         bPaginate: false
     })
+
+    selectType = (val) => {
+        val == 4 ? $("#input-other").removeAttr("disabled") : $("#input-other").attr("disabled", "disabled")
+    }
 
     modalBeneficiary = (id) => {
         runLoader('load')

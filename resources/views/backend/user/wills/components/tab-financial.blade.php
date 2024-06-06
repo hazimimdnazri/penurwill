@@ -133,18 +133,16 @@
                                     <table id="tableBusiness" class="table table-bordered border-top border-1 border-secondary" width="100%">
                                         <thead>
                                             <tr class="bg-light text-center">
-                                                <th width="30%" class="text-dark">Name</th>
-                                                <th width="20%" class="text-dark text-center">Type</th>
+                                                <th width="40%" class="text-dark">Name</th>
                                                 <th width="20%" class="text-dark text-center">Registration Number</th>
-                                                <th width="15%" class="text-dark text-center">Amount (RM)</th>
-                                                <th width="15%" class="text-dark text-center">Action</th>
+                                                <th width="20%" class="text-dark text-center">Share Amount (%)</th>
+                                                <th width="20%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($business as $b)
                                             <tr>
                                                 <td class="align-middle">{{ $b->business }}</td>
-                                                <td class="align-middle text-center">{{ $b->getType() }}</td>
                                                 <td class="align-middle text-center">{{ $b->registration_number }}</td>
                                                 <td class="text-center align-middle">{{ $b->amount ? number_format($b->amount, 2) : NULL }}</td>
                                                 <td class="text-center align-middle">

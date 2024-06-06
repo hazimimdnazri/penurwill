@@ -8,8 +8,8 @@
                 <form id="hirePurchaseData" class="row g-3">
                     @csrf
                     <div class="col-md-4 needs-validation">
-                        <label class="form-label">Hire Purchase Brand </label>
-                        <input type="text" style="text-transform: uppercase" name="brand" class="form-control" value="{{ $hire_purchase->brand }}">
+                        <label class="form-label">Hire Purchase Brand <span class="text-danger">*</span></label>
+                        <input type="text" style="text-transform: uppercase" name="brand" class="form-control" value="{{ $hire_purchase->brand }}" required>
                     </div>
                     <div class="col-md-4 needs-validation">
                         <label class="form-label">Hire Purchase Model </label>
@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Type <span class="text-danger">*</span></label>
-                        <select name="type" class="form-select select2">
+                        <select name="type" class="form-select select2" required>
                             <option value="1" {{ $hire_purchase->type == 1 ? 'selected' : NULL }}>Car</option>
                             <option value="2" {{ $hire_purchase->type == 2 ? 'selected' : NULL }}>Motorcycle</option>
                             <option value="3" {{ $hire_purchase->type == 3 ? 'selected' : NULL }}>Van</option>
@@ -25,15 +25,15 @@
                             <option value="5" {{ $hire_purchase->type == 5 ? 'selected' : NULL }}>Pickup</option>
                         </select>
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-4">
                         <label class="form-label">Year Made </label>
                         <input type="text" style="text-transform: uppercase" name="year" class="form-control" value="{{ $hire_purchase->year }}">
                     </div>
                     <div class="col-md-4 needs-validation">
-                        <label class="form-label">License Plate </label>
-                        <input type="text" style="text-transform: uppercase" name="registration_number" class="form-control" value="{{ $hire_purchase->registration_number }}">
+                        <label class="form-label">License Plate <span class="text-danger">*</span></label>
+                        <input type="text" style="text-transform: uppercase" name="registration_number" class="form-control" value="{{ $hire_purchase->registration_number }}" required>
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-4">
                         <label class="form-label">Colour </label>
                         <input type="text" style="text-transform: uppercase" name="colour" class="form-control" value="{{ $hire_purchase->colour }}">
                     </div>

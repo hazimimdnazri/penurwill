@@ -11,11 +11,11 @@
                             <div class="card-header card-title">Witness Information</div>
                             <div class="card-body">
                                 <div class="row g-3">
-                                    <div class="col-md-6 needs-validation">
+                                    <div class="col-md-12 needs-validation">
                                         <label class="form-label">Full Name <span class="text-danger">*</span></label>
                                         <input type="text" style="text-transform: uppercase" name="name[]" class="form-control" value="{{ $w->name }}">
                                     </div>
-                                    <div class="col-md-6 needs-validation">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">I.C Number <span class="text-danger">*</span></label>
                                         <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="12" class="form-control" value="{{ $w->ic }}" name="ic[]" required>
                                     </div>
@@ -24,13 +24,6 @@
                                         <div class="input-group">
                                             <span class="input-group-text">+60</span>
                                             <input type="text" onInput="this.value = this.value.replace(/^0|\D+/g, '')" maxlength="10" class="form-control" value="{{ $w->phone_mobile }}" name="phone_mobile[]" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label">Office Phone</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">+60</span>
-                                            <input type="text" onInput="this.value = this.value.replace(/^0|\D+/g, '')" maxlength="10" class="form-control" value="{{ $w->phone_office }}" name="phone_office[]">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -81,11 +74,11 @@
                             <div class="card-header card-title">Witness Information</div>
                             <div class="card-body">
                                 <div class="row g-3">
-                                    <div class="col-md-6 needs-validation">
+                                    <div class="col-md-12 needs-validation">
                                         <label class="form-label">Full Name <span class="text-danger">*</span></label>
                                         <input type="text" style="text-transform: uppercase" name="name[]" class="form-control" value="">
                                     </div>
-                                    <div class="col-md-6 needs-validation">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">I.C Number <span class="text-danger">*</span></label>
                                         <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="12" class="form-control" value="" name="ic[]" required>
                                     </div>
@@ -94,13 +87,6 @@
                                         <div class="input-group">
                                             <span class="input-group-text">+60</span>
                                             <input type="text" onInput="this.value = this.value.replace(/^0|\D+/g, '')" maxlength="10" class="form-control" value="" name="phone_mobile[]" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label class="form-label">Office Phone</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">+60</span>
-                                            <input type="text" onInput="this.value = this.value.replace(/^0|\D+/g, '')" maxlength="10" class="form-control" value="" name="phone_office[]">
                                         </div>
                                     </div>
                                     <div class="col-md-4">

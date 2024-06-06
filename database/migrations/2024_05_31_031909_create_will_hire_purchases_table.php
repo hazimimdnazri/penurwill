@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignUuid('will_id');
             $table->string('brand');
-            $table->string('model');
-            $table->string('year');
-            $table->string('colour');
+            $table->string('model')->nullable();;
+            $table->string('year')->nullable();
+            $table->string('colour')->nullable();;
             $table->integer('type')->default(1); // Car / Motorcycle / Lorry
-            $table->string('registration_number')->nullable();
-            $table->foreignId('bank_id');
+            $table->string('registration_number');
+            $table->foreignId('bank_id')->nullable();;
             $table->boolean('isOnLoan')->default(true);
             $table->json('beneficiaries')->nullable();
             $table->timestamps();
