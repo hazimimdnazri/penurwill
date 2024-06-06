@@ -34,6 +34,6 @@
 <script>
     next = () => {
         runLoader('load')
-        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=witness') }}");
+        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=executor') }}");
     }
 </script>
