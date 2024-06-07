@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
-                                        <button type="button" id="estate" onClick="modalProperty(this.id)" onClick="modalFamily()" class="btn btn-xs btn-success">Add Real Estate</button>
+                                        <button type="button" id="estate" onClick="modalProperty(this.id)" class="btn btn-xs btn-success">Add Real Estate</button>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -39,7 +39,7 @@
                                                 <th width="20%" class="text-dark text-center">Account</th>
                                                 <th width="15%" class="text-dark text-center">Size</th>
                                                 <th width="20%" class="text-dark">Address</th>
-                                                <th width="10%" class="text-dark">Action</th>
+                                                <th width="10%" class="text-dark text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -139,7 +139,7 @@
                                                 <th width="40%" class="text-dark">Type</th>
                                                 <th width="20%" class="text-dark text-center">Weight (gram)</th>
                                                 <th width="20%" class="text-dark text-center">Quantity (pcs)</th>
-                                                <th width="20%" class="text-dark text-center">Action</th>
+                                                <th width="20%" class="text-dark text-center text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -194,7 +194,7 @@
                                         @foreach($others as $o)
                                         <tr>
                                             <td class="align-middle">{{ $o->getType() }}</td>
-                                            <td class="align-middle text-center">{{ number_format($o->worth, 2) }}</td>
+                                            <td class="align-middle text-center">{{ $o->worth ? number_format($o->worth, 2) : NULL }}</td>
                                             <td class="align-middle text-center">{{ $o->quantity }}</td>
                                             <td class="text-center align-middle">
                                                 <div class="dropdown">

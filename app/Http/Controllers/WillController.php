@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Will;
+use App\Models\User;
+use App\Models\CustomerDetail;
 use App\Models\LState;
 use App\Models\LBank;
 use App\Models\WillBeneficiary;
@@ -19,6 +21,8 @@ use App\Models\WillDigitalAsset;
 use App\Models\WillExecutor;
 use App\Models\WillWitness;
 use App\Models\WillDebt;
+use App\Models\WillBenefit;
+use App\Models\WillTestament;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class WillController extends Controller
@@ -70,8 +74,14 @@ class WillController extends Controller
                 return view('backend.user.wills.components.tab-'.$request->tab, compact('debts'));
                 break;
             
+            case 'benefit':
+                $benefits = WillBenefit::where('will_id', auth()->user()->r_will->id)->get();
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('benefits'));
+                break;
+            
             case 'testament':                
-                return view('backend.user.wills.components.tab-'.$request->tab);
+                $testament = WillTestament::where('will_id', auth()->user()->r_will->id)->first() ?? new WillTestament;
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('testament'));
                 break;
             
             case 'executor':                
@@ -271,6 +281,33 @@ class WillController extends Controller
         }
     }
 
+    public function storePersonal(Request $request){
+        $user = User::findorfail(auth()->user()->id);
+        $user->name = $request->name;
+
+        if($user->save()){
+            $details = CustomerDetail::findorfail(auth()->user()->r_details->id);
+            $details->ic = $request->ic;
+            $details->phone_home = $request->phone_home;
+            $details->phone_mobile = $request->phone_mobile;
+            $details->gender = $request->gender;
+            $details->marital_status = $request->marital_status;
+            $details->address_1 = $request->address_1;
+            $details->address_2 = $request->address_2;
+            $details->address_3 = $request->address_3;
+            $details->zipcode = $request->zipcode;
+            $details->city = $request->city;
+            $details->state_id = $request->state_id;
+
+            if($details->save()){
+                return [
+                    'status' => 'success',
+                    'message' => 'User details has been saved.'
+                ];
+            }
+        }
+    }
+
     public function storeBeneficiary(Request $request){
         $beneficiary = isset($request->beneficiary_id) ? WillBeneficiary::findorfail($request->beneficiary_id) : new WillBeneficiary;
         $beneficiary->name = strtoupper($request->name);
@@ -392,6 +429,7 @@ class WillController extends Controller
         $hire_purchase->colour = strtoupper($request->colour);
         $hire_purchase->registration_number = strtoupper($request->registration_number);
         $hire_purchase->bank_id = $request->bank_id;
+        $hire_purchase->isOnLoan = $request->isOnLoan == 1 ? TRUE : FALSE;
 
         if($hire_purchase->save()){
             return [
@@ -410,9 +448,9 @@ class WillController extends Controller
         $jewelry = isset($request->id) ? WillJewelry::findorfail($request->id) : new WillJewelry;
         $jewelry->will_id = auth()->user()->r_will->id;
         $jewelry->type = $request->type;
-        $jewelry->jewelry = $request->jewelry;
+        $jewelry->jewelry = strtoupper($request->jewelry);
         $jewelry->weight = $request->weight;
-        $jewelry->quantity = $request->quantity;
+        $jewelry->quantity = $request->quantity ?? 1;
 
         if($jewelry->save()){
             return [
@@ -432,7 +470,7 @@ class WillController extends Controller
         $other->will_id = auth()->user()->r_will->id;
         $other->type = $request->type;
         $other->worth = $request->worth;
-        $other->quantity = $request->quantity;
+        $other->quantity = $request->quantity ?? 1;
 
         if($other->save()){
             return [
@@ -509,6 +547,41 @@ class WillController extends Controller
             return [
                 'status' => 'success',
                 'message' => 'Debts and liabilities information has been saved.'
+            ];
+        }
+    }
+
+    public function modalBenefit(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
+        $benefit = isset($request->id) ? WillBenefit::findorfail($request->id) : new WillBenefit;
+        return view('backend.user.wills.components.modal-benefit', compact('benefit', 'beneficiaries'));
+    }
+
+    public function storeBenefit(Request $request){
+        $benefit = isset($request->id) ? WillBenefit::findorfail($request->id) : new WillBenefit;
+        $benefit->will_id = auth()->user()->r_will->id;
+        $benefit->remark = strtoupper($request->remark);
+        $benefit->percentage = $request->percentage;
+        $benefit->beneficiary_id = $request->beneficiary_id;
+
+        if($benefit->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Beneficiary for future benefits information has been saved.'
+            ];
+        }
+    }
+
+    public function storeTestament(Request $request){
+        $benefit = isset($request->id) ? WillTestament::findorfail($request->id) : new WillTestament;
+        $benefit->will_id = auth()->user()->r_will->id;
+        $benefit->testament = $request->testament;
+        $benefit->remark = strtoupper($request->remark);
+
+        if($benefit->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Last testament has been saved.'
             ];
         }
     }

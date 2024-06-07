@@ -9,11 +9,11 @@
                     @csrf
                     <div class="col-md-5">
                         <label class="form-label">Type <span class="text-danger">*</span></label>
-                        <select name="type" class="form-select select2" onChange="selectType(this.value)">
-                            <option value="1" {{ $jewelry->type == 1 ? 'selected' : NULL }}>Necklace</option>
-                            <option value="2" {{ $jewelry->type == 2 ? 'selected' : NULL }}>Ring</option>
-                            <option value="3" {{ $jewelry->type == 3 ? 'selected' : NULL }}>Bracelet</option>
-                            <option value="4" {{ $jewelry->type == 4 ? 'selected' : NULL }}>Others</option>
+                        <select name="type" id="jewelry_type" class="form-select select2" onChange="selectType(this.value)">
+                            <option value="1">Necklace</option>
+                            <option value="2">Ring</option>
+                            <option value="3">Bracelet</option>
+                            <option value="4">Others</option>
                         </select>
                     </div>
                     <div class="col-md-7">
@@ -98,6 +98,12 @@
 <div id="variable_3"></div>
 
 <script>
+    $(() => {
+        @if($jewelry->id)
+        $("#jewelry_type").val({{$jewelry->type}}).change()
+        @endif
+    })
+
     benT = $("#tableBeneficiary").DataTable({
         bLengthChange: false,
         bFilter: false,
@@ -107,7 +113,7 @@
     })
 
     selectType = (val) => {
-        val == 4 ? $("#input-other").removeAttr("disabled") : $("#input-other").attr("disabled", "disabled")
+        val == 4 ? $("#input-other").removeAttr("disabled") : $("#input-other").attr("disabled", "disabled").then( $("#input-other").val(''))
     }
 
     modalBeneficiary = (id) => {

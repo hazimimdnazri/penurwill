@@ -30,7 +30,7 @@
 							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'dnl' ? 'active' : NULL) : NULL }}" href="?tab=dnl" aria-selected="false">Debts & Liabilities</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'benefits' ? 'active' : NULL) : NULL }}" href="?tab=benefits" aria-selected="false">Future Benefits</a>
+							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'benefit' ? 'active' : NULL) : NULL }}" href="?tab=benefit" aria-selected="false">Future Benefits</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'testament' ? 'active' : NULL) : NULL }}" href="?tab=testament" aria-selected="false">Last Testament</a>

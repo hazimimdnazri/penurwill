@@ -8,26 +8,26 @@
                 <form id="investmentData" class="row g-3">
                     @csrf
                     <div class="col-md-12 needs-validation">
-                        <label class="form-label">Investment Name </label>
-                        <input type="text" style="text-transform: uppercase" name="investment" class="form-control" value="{{ $investment->investment }}">
+                        <label class="form-label">Investment Name <span class="text-danger">*</span></label>
+                        <input type="text" style="text-transform: uppercase" name="investment" class="form-control" value="{{ $investment->investment }}" required>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 needs-validation">
                         <label class="form-label">Type <span class="text-danger">*</span></label>
-                        <select name="type" class="form-select select2">
+                        <select name="type" class="form-select select2" required>
                             <option value="1" {{ $investment->type == 1 ? 'selected' : NULL }}>Stocks</option>
                             <option value="2" {{ $investment->type == 2 ? 'selected' : NULL }}>Bonds</option>
                             <option value="3" {{ $investment->type == 3 ? 'selected' : NULL }}>Mutual Funds</option>
                             <option value="4" {{ $investment->type == 4 ? 'selected' : NULL }}>Brokerage Account</option>
                         </select>
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-4">
                         <label class="form-label">Share Percentage </label>
                         <div class="input-group">
                             <input type="text" style="text-transform: uppercase" name="share_percentage" class="form-control" value="{{ $investment->share_percentage }}">
                             <span class="input-group-text" id="basic-addon1">%</span>
                         </div>
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-4">
                         <label class="form-label">Share Amount </label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1">RM</span>

@@ -24,7 +24,7 @@ class WillJewelry extends Model
                 break;
             
             case 4:
-                return 'Others';
+                return $this->jewelry;
                 break;
             
             default:

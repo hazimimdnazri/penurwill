@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->string('ic');
+            $table->enum('gender', ['M', 'F'])->nullable();
+            $table->enum('marital_status', ['M', 'S', 'D'])->nullable();
             $table->string('phone_mobile');
             $table->string('phone_home')->nullable();
             $table->string('phone_office')->nullable();

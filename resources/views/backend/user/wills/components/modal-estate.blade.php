@@ -7,9 +7,9 @@
             <div class="modal-body">
                 <form id="estateData" class="row g-3">
                     @csrf
-                    <div class="col-md-6">
+                    <div class="col-md-6 needs-validation">
                         <label class="form-label">Real Estate Type <span class="text-danger">*</span></label>
-                        <select name="type" class="form-select select2">
+                        <select name="type" class="form-select" required>
                             <option value="">-- Select Type --</option>
                             <option value="1" {{ $estate->type == 1 ? 'selected' : NULL }}>House (Lot)</option>
                             <option value="2" {{ $estate->type == 2 ? 'selected' : NULL }}>House (Semi-D)</option>
@@ -21,31 +21,31 @@
                             <option value="8" {{ $estate->type == 8 ? 'selected' : NULL }}>Others</option>
                         </select>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 needs-validation">
                         <label class="form-label">Bank <span class="text-danger">*</span></label>
-                        <select name="bank_id" class="form-select select2">
+                        <select name="bank_id" class="form-select" required>
                             <option value="">-- Select Bank --</option>
                             @foreach($banks as $b)
                             <option value="{{ $b->id }}" {{ $estate->bank_id == $b->id ? 'selected' : NULL }}>{{ strtoupper($b->bank) }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-5 needs-validation">
+                    <div class="col-md-5">
                         <label class="form-label">Bank Branch </label>
                         <input type="text" style="text-transform: uppercase" name="branch" class="form-control" value="{{ $estate->branch }}">
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-4">
                         <label class="form-label">Account Number </label>
                         <input type="text" style="text-transform: uppercase" name="account_number" class="form-control" value="{{ $estate->account_number }}">
                     </div>
-                    <div class="col-md-3 needs-validation">
+                    <div class="col-md-3">
                         <label class="form-label">Real Estate Size </label>
                         <div class="input-group">
                             <input type="text" style="text-transform: uppercase" name="size" class="form-control" value="{{ $estate->size }}">
                             <span class="input-group-text" id="basic-addon1">sqft</span>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 needs-validation">
                         <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
                         <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->address_1 }}" name="address_1" required>
                     </div>
@@ -57,15 +57,15 @@
                         <label class="form-label">Address Line 3</label>
                         <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->address_3 }}" name="address_3">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 needs-validation">
                         <label class="form-label">Zipcode <span class="text-danger">*</span></label>
                         <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" class="form-control" value="{{ $estate->zipcode }}" name="zipcode" required>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 needs-validation">
                         <label class="form-label">City <span class="text-danger">*</span></label>
                         <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $estate->city }}" name="city" required>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 needs-validation">
                         <label class="form-label">State <span class="text-danger">*</span></label>
                         <select name="state_id" class="form-select select2" required>
                             @foreach($states as $s)

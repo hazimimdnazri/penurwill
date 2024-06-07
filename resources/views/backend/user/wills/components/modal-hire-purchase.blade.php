@@ -11,11 +11,11 @@
                         <label class="form-label">Hire Purchase Brand <span class="text-danger">*</span></label>
                         <input type="text" style="text-transform: uppercase" name="brand" class="form-control" value="{{ $hire_purchase->brand }}" required>
                     </div>
-                    <div class="col-md-4 needs-validation">
+                    <div class="col-md-4">
                         <label class="form-label">Hire Purchase Model </label>
                         <input type="text" style="text-transform: uppercase" name="model" class="form-control" value="{{ $hire_purchase->model }}">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 needs-validation">
                         <label class="form-label">Type <span class="text-danger">*</span></label>
                         <select name="type" class="form-select select2" required>
                             <option value="1" {{ $hire_purchase->type == 1 ? 'selected' : NULL }}>Car</option>
@@ -37,13 +37,20 @@
                         <label class="form-label">Colour </label>
                         <input type="text" style="text-transform: uppercase" name="colour" class="form-control" value="{{ $hire_purchase->colour }}">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 needs-validation">
                         <label class="form-label">Loan Bank <span class="text-danger">*</span></label>
-                        <select name="bank_id" class="form-select select2">
+                        <select name="bank_id" class="form-select select2" required>
                             <option value="">-- Select Bank --</option>
                             @foreach($banks as $b)
                             <option value="{{ $b->id }}" {{ $hire_purchase->bank_id == $b->id ? 'selected' : NULL }}>{{ $b->bank }}</option>
                             @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3 needs-validation">
+                        <label class="form-label">Ongoing Loan? <span class="text-danger">*</span></label>
+                        <select name="isOnLoan" class="form-select select2" required>
+                            <option value="1" {{ $hire_purchase->isOnLoan == TRUE ? 'selected' : NULL }}>YES</option>
+                            <option value="0" {{ $hire_purchase->isOnLoan == FALSE ? 'selected' : NULL }}>NO</option>
                         </select>
                     </div>
                     <input type="hidden" name="id" value="{{ $hire_purchase->id }}">

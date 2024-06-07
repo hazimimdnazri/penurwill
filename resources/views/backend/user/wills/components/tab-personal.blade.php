@@ -4,7 +4,7 @@
             <div class="card-body">
                 <h6 class="card-title mb-1">Personal Information</h6>
                 <span class="text-secondary">Please fill in all the field marked with <span class="text-danger"> *</span></span>
-                <form id="leadData" class="row mt-2">
+                <form id="personalData" class="row mt-2">
                     @csrf
 
                     <div class="col-md-6 grid-margin stretch-card">
@@ -13,29 +13,29 @@
                                 <div class="row g-3">
                                     <div class="col-md-12 needs-validation">
                                         <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ auth()->user()->name }}">
+                                        <input type="text" style="text-transform: uppercase" name="name" class="form-control" value="{{ auth()->user()->name }}">
                                     </div>
                                     <div class="col-md-6 needs-validation">
                                         <label class="form-label">E-Mail Address <span class="text-danger">*</span></label>
-                                        <input type="email" class="form-control" value="{{ auth()->user()->email }}" name="email" required>
+                                        <input type="email" class="form-control" value="{{ auth()->user()->email }}" name="email" disabled>
                                     </div>
                                     <div class="col-md-6 needs-validation">
                                         <label class="form-label">I.C Number <span class="text-danger">*</span></label>
-                                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="12" class="form-control" value="{{ auth()->user()->r_details->ic }}" name="ic" required>
+                                        <input type="text" name="ic" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="12" class="form-control" value="{{ auth()->user()->r_details->ic }}" name="ic" required>
                                     </div>
                                     <div class="col-md-6 needs-validation">
                                         <label class="form-label">Gender <span class="text-danger">*</span></label>
                                         <select name="gender" class="form-select" required>
-                                            <option value="M" >MALE</option>
-                                            <option value="F" >FEMALE</option>
+                                            <option value="M" {{ auth()->user()->r_details->gender == 'M' ? 'selected' : NULL}}>MALE</option>
+                                            <option value="F" {{ auth()->user()->r_details->gender == 'F' ? 'selected' : NULL}}>FEMALE</option>
                                         </select> 
                                     </div>
                                     <div class="col-md-6 needs-validation">
                                         <label class="form-label">Marital Status <span class="text-danger">*</span></label>
-                                        <select name="status" class="form-select select2" required>
-                                            <option value="S">SINGLE</option>
-                                            <option value="M">MARRIED</option>
-                                            <option value="D">DIVORCED</option>
+                                        <select name="marital_status" class="form-select" required>
+                                            <option value="S" {{ auth()->user()->r_details->marital_status == 'S' ? 'selected' : NULL}}>SINGLE</option>
+                                            <option value="M" {{ auth()->user()->r_details->marital_status == 'M' ? 'selected' : NULL}}>MARRIED</option>
+                                            <option value="D" {{ auth()->user()->r_details->marital_status == 'D' ? 'selected' : NULL}}>DIVORCED</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 needs-validation">
@@ -209,7 +209,42 @@
     }
 
     next = () => {
-        runLoader('load')
-        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=financial') }}");
+        var validateGroup = $(".needs-validation");
+        var formData = new FormData($('#personalData')[0]);
+
+        if ($('#personalData')[0].checkValidity() === true) {
+            runLoader('save')
+
+            $.ajax({
+                url: "{{ url('client/my-will/ajax/store-personal') }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response.status == 'success'){
+                    runAlertSuccess(response.message)
+                    .then((result) => {
+                        if(result.value){
+                            runLoader('load')
+                            location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=financial') }}");
+
+                        }
+                    })
+                } else {
+                    runAlertError(response.message)
+                }
+            });
+        } else {
+            Swal.fire(
+                'Error!',
+                'Please fill all the required fields.',
+                'error'
+            )
+            for (var i = 0; i < validateGroup.length; i++) {
+                validateGroup[i].classList.add('was-validated');
+            }
+        }
     }
 </script>

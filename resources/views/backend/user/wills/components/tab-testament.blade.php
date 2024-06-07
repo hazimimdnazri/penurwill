@@ -15,9 +15,11 @@
                                     <div class="d-flex flex-row align-items-center">
                                     </div>
                                 </div>
-                                <div class="table-responsive">
-                                    <textarea class="form-control" name="testament" rows="15"></textarea>
-                                </div>
+                                <form id="testamentData" class="table-responsive">
+                                    @csrf
+                                    <textarea class="form-control" name="testament" rows="15">{{ $testament->testament }}</textarea>
+                                    <input type="hidden" name="id" value="{{ $testament->id }}">
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -33,7 +35,42 @@
 
 <script>
     next = () => {
-        runLoader('load')
-        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=executor') }}");
+        var validateGroup = $(".needs-validation");
+        var formData = new FormData($('#testamentData')[0]);
+
+        if ($('#testamentData')[0].checkValidity() === true) {
+            runLoader('save')
+
+            $.ajax({
+                url: "{{ url('client/my-will/ajax/store-testament') }}",
+                type: 'POST',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done((response) => {
+                if(response.status == 'success'){
+                    runAlertSuccess(response.message)
+                    .then((result) => {
+                        if(result.value){
+                            runLoader('load')
+                            location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=executor') }}");
+
+                        }
+                    })
+                } else {
+                    runAlertError(response.message)
+                }
+            });
+        } else {
+            Swal.fire(
+                'Error!',
+                'Please fill all the required fields.',
+                'error'
+            )
+            for (var i = 0; i < validateGroup.length; i++) {
+                validateGroup[i].classList.add('was-validated');
+            }
+        }
     }
 </script>

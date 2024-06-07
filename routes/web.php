@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
         Route::group(['prefix' => 'ajax'], function(){
             Route::post('modal-create', [WillController::class, 'modalCreate']);
             Route::post('load-tab', [WillController::class, 'loadTab']);
+            Route::post('store-personal', [WillController::class, 'storePersonal']);
             Route::post('modal-beneficiary', [WillController::class, 'modalBeneficiary']);
             Route::post('store-beneficiary', [WillController::class, 'storeBeneficiary']);
             Route::post('modal-beneficiary-add', [WillController::class, 'modalBeneficiaryAdd']);
@@ -87,6 +88,9 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('store-estate', [WillController::class, 'storeEstate']);
             Route::post('modal-debt', [WillController::class, 'modalDebt']);
             Route::post('store-debt', [WillController::class, 'storeDebt']);
+            Route::post('modal-benefit', [WillController::class, 'modalBenefit']);
+            Route::post('store-benefit', [WillController::class, 'storeBenefit']);
+            Route::post('store-testament', [WillController::class, 'storeTestament']);
             Route::post('modal-executor', [WillController::class, 'modalExecutor']);
             Route::post('store-executor', [WillController::class, 'storeExecutor']);
             Route::post('store-witness', [WillController::class, 'storeWitness']);

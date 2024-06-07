@@ -9,7 +9,7 @@
                     @csrf
                     <div class="col-md-5 needs-validation">
                         <label class="form-label">Business Name <span class="text-danger">*</span></label>
-                        <input type="text" style="text-transform: uppercase" name="business" class="form-control" value="{{ $business->business }}">
+                        <input type="text" style="text-transform: uppercase" name="business" class="form-control" value="{{ $business->business }}" required>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Registration Number </label>
