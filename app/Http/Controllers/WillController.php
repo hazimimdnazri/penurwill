@@ -631,7 +631,7 @@ class WillController extends Controller
             $witness->name = strtoupper($request->name[$i]);
             $witness->ic = $request->ic[$i];
             $witness->phone_mobile = $request->phone_mobile[$i];
-            $witness->phone_office = $request->phone_office[$i];
+            $witness->phone_home = $request->phone_home[$i];
             $witness->address_1 = strtoupper($request->address_1[$i]);
             $witness->address_2 = strtoupper($request->address_2[$i]);
             $witness->address_3 = strtoupper($request->address_3[$i]);

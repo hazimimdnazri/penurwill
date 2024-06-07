@@ -13,7 +13,7 @@
                                 <div class="row g-3">
                                     <div class="col-md-12 needs-validation">
                                         <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" style="text-transform: uppercase" name="name[]" class="form-control" value="{{ $w->name }}">
+                                        <input type="text" style="text-transform: uppercase" name="name[]" class="form-control" value="{{ $w->name }}" required>
                                     </div>
                                     <div class="col-md-4 needs-validation">
                                         <label class="form-label">I.C Number <span class="text-danger">*</span></label>
@@ -33,9 +33,9 @@
                                             <input type="text" onInput="this.value = this.value.replace(/^0|\D+/g, '')" maxlength="10" class="form-control" value="{{ $w->phone_home }}" name="phone_home[]">
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 needs-validation">
                                         <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
-                                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $w->address_1 }}" name="address_1[]">
+                                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $w->address_1 }}" name="address_1[]" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label">Address Line 2</label>
@@ -45,17 +45,17 @@
                                         <label class="form-label">Address Line 3</label>
                                         <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $w->address_3 }}" name="address_3[]">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">Zipcode <span class="text-danger">*</span></label>
-                                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" class="form-control" value="{{ $w->zipcode }}" name="zipcode[]">
+                                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" class="form-control" value="{{ $w->zipcode }}" name="zipcode[]" required>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">City <span class="text-danger">*</span></label>
-                                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $w->city }}" name="city[]">
+                                        <input type="text" style="text-transform: uppercase" class="form-control" value="{{ $w->city }}" name="city[]" required>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">State <span class="text-danger">*</span></label>
-                                        <select name="state_id[]" class="form-select select2">
+                                        <select name="state_id[]" class="form-select select2" required>
                                             @foreach($states as $s)
                                             <option value="{{ $s->id }}" {{ $w->state_id == $s->id ? 'selected' : NULL }}>{{ strtoupper($s->state) }}</option>
                                             @endforeach
@@ -76,7 +76,7 @@
                                 <div class="row g-3">
                                     <div class="col-md-12 needs-validation">
                                         <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" style="text-transform: uppercase" name="name[]" class="form-control" value="">
+                                        <input type="text" style="text-transform: uppercase" name="name[]" class="form-control" value="" required>
                                     </div>
                                     <div class="col-md-4 needs-validation">
                                         <label class="form-label">I.C Number <span class="text-danger">*</span></label>
@@ -96,9 +96,9 @@
                                             <input type="text" onInput="this.value = this.value.replace(/^0|\D+/g, '')" maxlength="10" class="form-control" value="" name="phone_home[]">
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 needs-validation">
                                         <label class="form-label">Address Line 1 <span class="text-danger">*</span></label>
-                                        <input type="text" style="text-transform: uppercase" class="form-control" value="" name="address_1[]">
+                                        <input type="text" style="text-transform: uppercase" class="form-control" value="" name="address_1[]" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label class="form-label">Address Line 2</label>
@@ -108,17 +108,17 @@
                                         <label class="form-label">Address Line 3</label>
                                         <input type="text" style="text-transform: uppercase" class="form-control" value="" name="address_3[]">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">Zipcode <span class="text-danger">*</span></label>
-                                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" class="form-control" value="" name="zipcode[]">
+                                        <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="5" class="form-control" value="" name="zipcode[]" required>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">City <span class="text-danger">*</span></label>
-                                        <input type="text" style="text-transform: uppercase" class="form-control" value="" name="city[]">
+                                        <input type="text" style="text-transform: uppercase" class="form-control" value="" name="city[]" required>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 needs-validation">
                                         <label class="form-label">State <span class="text-danger">*</span></label>
-                                        <select name="state_id[]" class="form-select select2">
+                                        <select name="state_id[]" class="form-select select2" required>
                                             @foreach($states as $s)
                                             <option value="{{ $s->id }}">{{ strtoupper($s->state) }}</option>
                                             @endforeach
