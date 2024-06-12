@@ -269,8 +269,9 @@ class WillController extends Controller
     }
 
     public function modalInsurance(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $insurance = isset($request->id) ? WillInsurance::findorfail($request->id) : new WillInsurance;
-        return view('backend.user.wills.components.modal-insurance', compact('insurance'));
+        return view('backend.user.wills.components.modal-insurance', compact('insurance', 'beneficiaries'));
     }
 
     public function storeInsurance(Request $request){
@@ -281,6 +282,15 @@ class WillController extends Controller
         $insurance->amount = $request->amount;
         $insurance->type = $request->type;
 
+        if($this->validateBeneficiary($request)['status'] == 'error'){
+            return [
+                'status' => 'error',
+                'message' => 'Please insert beneficiary information.'
+            ];
+        } else {
+            $insurance->beneficiaries = $this->validateBeneficiary($request)['data'];
+        }
+
         if($insurance->save()){
             return [
                 'status' => 'success',
@@ -290,9 +300,10 @@ class WillController extends Controller
     }
 
     public function modalHirePurchase(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $hire_purchase = isset($request->id) ? WillHirePurchase::findorfail($request->id) : new WillHirePurchase;
         $banks = LBank::all();
-        return view('backend.user.wills.components.modal-hire-purchase', compact('hire_purchase', 'banks'));
+        return view('backend.user.wills.components.modal-hire-purchase', compact('hire_purchase', 'banks', 'beneficiaries'));
     }
 
     public function storeHirePurchase(Request $request){
@@ -307,6 +318,15 @@ class WillController extends Controller
         $hire_purchase->bank_id = $request->bank_id;
         $hire_purchase->isOnLoan = $request->isOnLoan == 1 ? TRUE : FALSE;
 
+        if($this->validateBeneficiary($request)['status'] == 'error'){
+            return [
+                'status' => 'error',
+                'message' => 'Please insert beneficiary information.'
+            ];
+        } else {
+            $hire_purchase->beneficiaries = $this->validateBeneficiary($request)['data'];
+        }
+
         if($hire_purchase->save()){
             return [
                 'status' => 'success',
@@ -316,8 +336,9 @@ class WillController extends Controller
     }
 
     public function modalJewelry(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $jewelry = isset($request->id) ? WillJewelry::findorfail($request->id) : new WillJewelry;
-        return view('backend.user.wills.components.modal-jewelry', compact('jewelry'));
+        return view('backend.user.wills.components.modal-jewelry', compact('jewelry', 'beneficiaries'));
     }
 
     public function storeJewelry(Request $request){
@@ -328,6 +349,15 @@ class WillController extends Controller
         $jewelry->weight = $request->weight;
         $jewelry->quantity = $request->quantity ?? 1;
 
+        if($this->validateBeneficiary($request)['status'] == 'error'){
+            return [
+                'status' => 'error',
+                'message' => 'Please insert beneficiary information.'
+            ];
+        } else {
+            $jewelry->beneficiaries = $this->validateBeneficiary($request)['data'];
+        }
+
         if($jewelry->save()){
             return [
                 'status' => 'success',
@@ -337,8 +367,9 @@ class WillController extends Controller
     }
 
     public function modalPropertyOther(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $other = isset($request->id) ? WillOtherProperty::findorfail($request->id) : new WillOtherProperty;
-        return view('backend.user.wills.components.modal-property-other', compact('other'));
+        return view('backend.user.wills.components.modal-property-other', compact('other', 'beneficiaries'));
     }
 
     public function storePropertyOther(Request $request){
@@ -347,6 +378,15 @@ class WillController extends Controller
         $other->type = $request->type;
         $other->worth = $request->worth;
         $other->quantity = $request->quantity ?? 1;
+
+        if($this->validateBeneficiary($request)['status'] == 'error'){
+            return [
+                'status' => 'error',
+                'message' => 'Please insert beneficiary information.'
+            ];
+        } else {
+            $other->beneficiaries = $this->validateBeneficiary($request)['data'];
+        }
 
         if($other->save()){
             return [
@@ -357,8 +397,9 @@ class WillController extends Controller
     }
 
     public function modalDigital(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $digital = isset($request->id) ? WillDigitalAsset::findorfail($request->id) : new WillDigitalAsset;
-        return view('backend.user.wills.components.modal-digital', compact('digital'));
+        return view('backend.user.wills.components.modal-digital', compact('digital', 'beneficiaries'));
     }
 
     public function storeDigital(Request $request){
@@ -369,6 +410,15 @@ class WillController extends Controller
         $digital->asset = strtoupper($request->asset);
         $digital->provider = strtoupper($request->provider);
 
+        if($this->validateBeneficiary($request)['status'] == 'error'){
+            return [
+                'status' => 'error',
+                'message' => 'Please insert beneficiary information.'
+            ];
+        } else {
+            $digital->beneficiaries = $this->validateBeneficiary($request)['data'];
+        }
+
         if($digital->save()){
             return [
                 'status' => 'success',
@@ -378,10 +428,11 @@ class WillController extends Controller
     }
 
     public function modalEstate(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $estate = isset($request->id) ? WillRealEstate::findorfail($request->id) : new WillRealEstate;
         $banks = LBank::all();
         $states = LState::all();
-        return view('backend.user.wills.components.modal-estate', compact('estate', 'banks', 'states'));
+        return view('backend.user.wills.components.modal-estate', compact('estate', 'banks', 'states', 'beneficiaries'));
     }
 
     public function storeEstate(Request $request){
@@ -398,6 +449,15 @@ class WillController extends Controller
         $estate->city = strtoupper($request->city);
         $estate->zipcode = $request->zipcode;
         $estate->state_id = $request->state_id;
+
+        if($this->validateBeneficiary($request)['status'] == 'error'){
+            return [
+                'status' => 'error',
+                'message' => 'Please insert beneficiary information.'
+            ];
+        } else {
+            $estate->beneficiaries = $this->validateBeneficiary($request)['data'];
+        }
 
         if($estate->save()){
             return [
