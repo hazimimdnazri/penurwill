@@ -1,7 +1,8 @@
 <style>
     body {
         font-family : "Arial";
-        font-size: 10;
+        font-size: 9.8;
+        margin-bottom: 130px;
     }
 
     .master {
@@ -10,6 +11,17 @@
 
     .page-break {
         page-break-before: always;
+    }
+
+    #sign {
+        position: fixed; 
+        bottom: -40px;
+        left: 0cm;
+        right: 0cm;
+        /** Extra personal styles **/
+        z-index: 10;
+        padding: 0 0;
+        padding-bottom: 0;
     }
 </style>
 
@@ -53,10 +65,10 @@
     <span>to be the Executor(s) of this my Will and Trustee(s) of my Estate.<br>
     @endif
 </div>
-<br><br>
-<p>Signed:</p>
-<br><br><br><br>
-<div style="width: 100%">
+
+<div id="sign" style="width: 100%">
+    <p>Signed:</p>
+    <br><br>
     <table width="100%">
         <tr>
             <td style="text-align: left">
@@ -80,7 +92,6 @@
         </tr>
     </table>
 </div>
-
 
 <div class="page-break"></div>
 
@@ -113,34 +124,6 @@
     <p>If any of my children predeceases me then the share they would have received  I give to their surviving children if any, in equal shares.</p>
 </div>
 
-<br><br>
-<p>Signed:</p>
-<br><br><br><br>
-<div style="width: 100%">
-    <table width="100%">
-        <tr>
-            <td style="text-align: left">
-                ___________________________<br><br>
-                Will Maker<br>
-                <p style="margin-bottom: 0; font-weight: bold">{{ auth()->user()->name }}</p>
-                <p style="margin-top: 0; font-weight: bold">{{ auth()->user()->r_details->ic }}</p>
-            </td>
-            <td style="text-align: left">
-                ___________________________<br><br>
-                Witness
-                <p style="margin-bottom: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->first()->name }}</p>
-                <p style="margin-top: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->first()->ic }}</p>
-            </td>
-            <td style="text-align: left">
-                ___________________________<br><br>
-                Witness
-                <p style="margin-bottom: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->skip(1)->first()->name }}</p>
-                <p style="margin-top: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->skip(1)->first()->ic }}</p>
-            </td>
-        </tr>
-    </table>
-</div>
-
 <div class="page-break"></div>
 
 <div style="text-align: left; width: 100%; margin-top: 10px">
@@ -164,34 +147,6 @@
     <p>If any of my children predeceases me then the share they would have received  I give to their surviving children if any, in equal shares.</p>
 </div>
 
-<br><br>
-<p>Signed:</p>
-<br><br><br><br>
-<div style="width: 100%">
-    <table width="100%">
-        <tr>
-            <td style="text-align: left">
-                ___________________________<br><br>
-                Will Maker<br>
-                <p style="margin-bottom: 0; font-weight: bold">{{ auth()->user()->name }}</p>
-                <p style="margin-top: 0; font-weight: bold">{{ auth()->user()->r_details->ic }}</p>
-            </td>
-            <td style="text-align: left">
-                ___________________________<br><br>
-                Witness
-                <p style="margin-bottom: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->first()->name }}</p>
-                <p style="margin-top: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->first()->ic }}</p>
-            </td>
-            <td style="text-align: left">
-                ___________________________<br><br>
-                Witness
-                <p style="margin-bottom: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->skip(1)->first()->name }}</p>
-                <p style="margin-top: 0; font-weight: bold">{{ auth()->user()->r_will->r_witnesses->skip(1)->first()->ic }}</p>
-            </td>
-        </tr>
-    </table>
-</div>
-
 <div class="page-break"></div>
 
 <div style="text-align: left; width: 100%; margin-top: 10px">
@@ -201,7 +156,7 @@
     @foreach(auth()->user()->r_will->r_debts as $d)
         Debt (<b>{{ $d->name }}</b>) with the amount of <b>RM {{ number_format($d->amount, 2) }}</b>
         <p>to</p>
-        @foreach(json_decode($i->beneficiaries, true) as $k => $v)
+        @foreach(json_decode($d->beneficiaries, true) as $k => $v)
             <p>
                 {{ \App\Models\WillBeneficiary::findorfail($k)->name }}, {{ \App\Models\WillBeneficiary::findorfail($k)->ic }} of 
                 @if(\App\Models\WillBeneficiary::findorfail($k)->address_1) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_1 }} </b>, @endif
@@ -220,7 +175,7 @@
     @foreach(auth()->user()->r_will->r_banks as $b)
         <b>{{ $b->r_bank->bank }}</b>, @if($b->branch) {{ $b->branch}} branch @endif with the amount of <b>RM {{ number_format($b->amount, 2) }}</b>
         <p>to</p>
-        @foreach(json_decode($i->beneficiaries, true) as $k => $v)
+        @foreach(json_decode($b->beneficiaries, true) as $k => $v)
             <p>
                 {{ \App\Models\WillBeneficiary::findorfail($k)->name }}, {{ \App\Models\WillBeneficiary::findorfail($k)->ic }} of 
                 @if(\App\Models\WillBeneficiary::findorfail($k)->address_1) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_1 }} </b>, @endif
@@ -241,7 +196,7 @@
     @foreach(auth()->user()->r_will->r_jewelries as $j)
         <b>{{ $j->quantity }} pc(s)</b> of <b>{{ $j->getType() }} @if($j->weight) ({{ $j->weight }} gram) @endif</b>
         <p>to</p>
-        @foreach(json_decode($i->beneficiaries, true) as $k => $v)
+        @foreach(json_decode($j->beneficiaries, true) as $k => $v)
             <p>
                 {{ \App\Models\WillBeneficiary::findorfail($k)->name }}, {{ \App\Models\WillBeneficiary::findorfail($k)->ic }} of 
                 @if(\App\Models\WillBeneficiary::findorfail($k)->address_1) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_1 }} </b>, @endif
@@ -253,6 +208,27 @@
     @endforeach
     @foreach(auth()->user()->r_will->r_others as $o)
         <b>{{ $j->getType() }}</b>
+        <p>to</p>
+        @foreach(json_decode($o->beneficiaries, true) as $k => $v)
+            <p>
+                {{ \App\Models\WillBeneficiary::findorfail($k)->name }}, {{ \App\Models\WillBeneficiary::findorfail($k)->ic }} of 
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_1) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_1 }} </b>, @endif
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_2) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_2 }} </b>, @endif
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_3) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_3 }} </b>, @endif
+                in the State of {{ strtoupper(\App\Models\WillBeneficiary::findorfail($k)->r_state->state) }}, MALAYSIA.
+            </p>
+        @endforeach
+    @endforeach
+    <p>If this person predeceases me or dies within 30 days of my death then I leave the whole of my estate free of all costs</p>
+    <p>If any of my children predeceases me then the share they would have received  I give to their surviving children if any, in equal shares.</p>
+</div>
+
+<div style="text-align: left; width: 100%; margin-top: 10px">
+    <p><b><u>INSURANCE</u></b></p>
+    <p style="margin-bottom: 0px">I hereby leave the: </p>
+    <br>
+    @foreach(auth()->user()->r_will->r_insurances as $i)
+        <b>{{ $i->getType() }}</b> - <b>({{ $i->insurance }})</b> provided by <b>{{ $i->provider }}</b>
         <p>to</p>
         @foreach(json_decode($i->beneficiaries, true) as $k => $v)
             <p>
@@ -267,3 +243,68 @@
     <p>If this person predeceases me or dies within 30 days of my death then I leave the whole of my estate free of all costs</p>
     <p>If any of my children predeceases me then the share they would have received  I give to their surviving children if any, in equal shares.</p>
 </div>
+
+<div style="text-align: left; width: 100%; margin-top: 10px">
+    <p><b><u>BUSINESS INTEREST</u></b></p>
+    <p style="margin-bottom: 0px">I hereby leave the: </p>
+    <br>
+    @foreach(auth()->user()->r_will->r_businesses as $b)
+        <b>{{ $b->name }}</b>
+        <p>to</p>
+        @foreach(json_decode($b->beneficiaries, true) as $k => $v)
+            <p>
+                {{ \App\Models\WillBeneficiary::findorfail($k)->name }}, {{ \App\Models\WillBeneficiary::findorfail($k)->ic }} of 
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_1) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_1 }} </b>, @endif
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_2) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_2 }} </b>, @endif
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_3) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_3 }} </b>, @endif
+                in the State of {{ strtoupper(\App\Models\WillBeneficiary::findorfail($k)->r_state->state) }}, MALAYSIA.
+            </p>
+        @endforeach
+    @endforeach
+    <p>If this person predeceases me or dies within 30 days of my death then I leave the whole of my estate free of all costs</p>
+    <p>If any of my children predeceases me then the share they would have received  I give to their surviving children if any, in equal shares.</p>
+</div>
+
+@if(auth()->user()->r_will->r_digitals->isNotEmpty())
+<div style="text-align: left; width: 100%; margin-top: 10px">
+    <p><b><u>DIGITAL ASSETS</u></b></p>
+    <p style="margin-bottom: 0px">I hereby leave the: </p>
+    <br>
+    @foreach(auth()->user()->r_will->r_digitals as $d)
+        <b>{{ $b->getType() }}</b>
+        <p>to</p>
+        @foreach(json_decode($d->beneficiaries, true) as $k => $v)
+            <p>
+                {{ \App\Models\WillBeneficiary::findorfail($k)->name }}, {{ \App\Models\WillBeneficiary::findorfail($k)->ic }} of 
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_1) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_1 }} </b>, @endif
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_2) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_2 }} </b>, @endif
+                @if(\App\Models\WillBeneficiary::findorfail($k)->address_3) <b> {{ \App\Models\WillBeneficiary::findorfail($k)->address_3 }} </b>, @endif
+                in the State of {{ strtoupper(\App\Models\WillBeneficiary::findorfail($k)->r_state->state) }}, MALAYSIA.
+            </p>
+        @endforeach
+    @endforeach
+    <p>If this person predeceases me or dies within 30 days of my death then I leave the whole of my estate free of all costs</p>
+    <p>If any of my children predeceases me then the share they would have received  I give to their surviving children if any, in equal shares.</p>
+</div>
+@endif
+
+@if(auth()->user()->r_will->r_benefits->isNotEmpty())
+<div style="text-align: left; width: 100%; margin-top: 10px">
+    <p><b><u>FUTURE BENEFITS</u></b></p>
+    <p style="margin-bottom: 0px">I hereby leave the: </p>
+    <br>
+    <b>Future Benefits</b>
+    <p>to</p>
+    @foreach(auth()->user()->r_will->r_benefits as $b)
+        <p>
+            {{ \App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->name }}, {{ \App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->ic }} of 
+            @if(\App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->address_1) <b> {{ \App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->address_1 }} </b>, @endif
+            @if(\App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->address_2) <b> {{ \App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->address_2 }} </b>, @endif
+            @if(\App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->address_3) <b> {{ \App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->address_3 }} </b>, @endif
+            in the State of {{ strtoupper(\App\Models\WillBeneficiary::findorfail($b->beneficiary_id)->r_state->state) }}, MALAYSIA.
+        </p>
+    @endforeach
+    <p>If this person predeceases me or dies within 30 days of my death then I leave the whole of my estate free of all costs</p>
+    <p>If any of my children predeceases me then the share they would have received  I give to their surviving children if any, in equal shares.</p>
+</div>
+@endif

@@ -64,7 +64,7 @@
                                         </select>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control" value="{{ $v['percentage'] }}" name="ben_per[]">
+                                        <input type="text" class="form-control" value="100" name="ben_per[]" readOnly>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" value="{{  $v['remark'] }}" name="ben_remark[]">
@@ -90,7 +90,7 @@
                                         </select>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control" name="ben_per[]">
+                                        <input type="text" class="form-control" value="100" name="ben_per[]" readOnly>
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" name="ben_remark[]">
@@ -129,52 +129,39 @@
         bPaginate: false
     })
 
-    modalBeneficiary = (id) => {
-        runLoader('load')
-        
-        $.ajax({
-            type:"POST",
-            url: "{{ url('client/my-will/ajax/modal-beneficiary-add') }}",
-            data: {
-                '_token': '{{ csrf_token() }}',
-                'id': id,
-                'item_id': "{{ $digital->id }}",
-                'modal': 'digital'
-            }
-        }).done((response) => {
-            $("#variable_3").html(response)
-            $('#modal-beneficiary-add').modal('show')
-            closeLoader()
-        });
+    addBeneficiary = () => {
+        $("#beneficiaryContainer").append(`
+        <tr id="input-col">
+            <td class="text-center">
+                <select name="ben_id[]" class="form-select">
+                    <option value="">-- SELECT BENEFICIARY --</option>
+                    @foreach($beneficiaries as $b)
+                    <option value="{{ $b->id }}">{{ $b->name }}</option>
+                    @endforeach
+                </select>
+            </td>
+            <td class="text-center">
+                <input type="text" class="form-control" value="100" name="ben_per[]" readOnly>
+            </td>
+            <td>
+                <input type="text" class="form-control" name="ben_remark[]">
+            </td>
+            <td class="text-center">
+                <button type="button" class="btn btn-xs btn-icon btn-danger" onClick="deleteBeneficiary(this.parentElement)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                    </svg>
+                </button>
+            </td>
+        </tr>
+        `)
     }
 
-    deleteBeneficiary = (id) => {
-        runLoader('load')
-        
-        $.ajax({
-            type:"POST",
-            url: "{{ url('client/my-will/ajax/modal-beneficiary-add') }}",
-            data: {
-                '_token': '{{ csrf_token() }}',
-                'id': id,
-                'item_id': "{{ $digital->id }}",
-                'modal': 'digital',
-                'action': 'delete'
-            }
-        }).done((response) => {
-            if(response.status == 'success'){
-                runAlertSuccess(response.message)
-                .then((result) => {
-                    if(result.value){
-                        runLoader('load')
-                        location.reload()
-                    }
-                })
-            } else {
-                runAlertError(response.message)
-            }
-        });
+    deleteBeneficiary = (e) => {
+        e.parentElement.remove();
     }
+
     submitModal = () => {
         var validateGroup = $(".needs-validation");
         var formData = new FormData($('#digitalData')[0]);

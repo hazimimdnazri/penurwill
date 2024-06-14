@@ -122,25 +122,6 @@
         bPaginate: false
     })
 
-    modalBeneficiary = (id) => {
-        runLoader('load')
-        
-        $.ajax({
-            type:"POST",
-            url: "{{ url('client/my-will/ajax/modal-beneficiary-add') }}",
-            data: {
-                '_token': '{{ csrf_token() }}',
-                'id': id,
-                'item_id': "{{ $business->id }}",
-                'modal': 'business'
-            }
-        }).done((response) => {
-            $("#variable_3").html(response)
-            $('#modal-beneficiary-add').modal('show')
-            closeLoader()
-        });
-    }
-
     addBeneficiary = () => {
         $("#beneficiaryContainer").append(`
         <tr id="input-col">
