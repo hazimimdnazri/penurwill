@@ -31,8 +31,9 @@ class WillController extends Controller
         $will = Will::where('user_id', auth()->user()->id)->first();
         if($will){
             return redirect(url('client/my-will/'.$will->id));
+        } else {
+            return redirect(url('client/dashboard'));
         }
-        return view('backend.user.wills.will-user');
     }
 
     public function modalCreate(Request $request){

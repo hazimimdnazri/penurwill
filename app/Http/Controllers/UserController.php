@@ -18,6 +18,10 @@ class UserController extends Controller
         return view('backend.user.components.modal-details', compact('details', 'states'));
     }
 
+    public function pay(){
+
+    }
+
     public function storeDetails(Request $request){
         $details = CustomerDetail::where('user_id', auth()->user()->id)->first() ?? new CustomerDetail;
         $details->user_id = auth()->user()->id;

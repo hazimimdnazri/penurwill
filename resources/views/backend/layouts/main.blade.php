@@ -99,6 +99,24 @@
 			});
 		}
 		@endif
+
+		@if(auth()->user()->role == 1 && !auth()->user()->r_will)
+		modalWill = () => {
+			runLoader('load')
+				
+			$.ajax({
+				type:"POST",
+				url: `{{ url('client/my-will/ajax/modal-create') }}`,
+				data: {
+					'_token': '{{ csrf_token() }}',
+				}
+			}).done((response) => {
+				$("#variable_main").html(response)
+				$('#modal-create').modal('show')
+				closeLoader()
+			});
+		}
+		@endif
 	</script>
 </body>
 </html>

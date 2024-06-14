@@ -15,10 +15,10 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ url('gateway/pay?package=1') }}" class="btn btn-primary">Package 1</a>
+                        <button onClick="pay()" class="btn btn-primary">Package 1</button>
                     </div>
                     <div class="col-md-6 text-center">
-                        <a href="{{ url('gateway/pay?package=2') }}" class="btn btn-info">Package 2</a>
+                        <button class="btn btn-info">Package 2</button>
                     </div>
                 </div>
             </div>
@@ -30,4 +30,21 @@
 </div>
 
 <script>
+    pay = () => {
+        runLoader('save')
+
+        $.ajax({
+            type:"POST",
+            url: "{{ url('gateway/pay') }}",
+            data: {
+                '_token': '{{ csrf_token() }}',
+            }
+        }).done((response) => {
+            if(response.status == 'success'){
+                window.location.replace(response.url);
+            } else {
+                runAlertError(response.message)
+            }
+        })
+    }
 </script>

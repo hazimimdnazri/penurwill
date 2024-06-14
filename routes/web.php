@@ -106,5 +106,7 @@ Route::group(['prefix' => 'ajax'], function(){
 });
 
 Route::group(['prefix' => 'gateway'], function(){
-    Route::get('pay', [TransactionController::class, 'gatewayPayment'])->middleware('auth');
+    Route::post('pay', [TransactionController::class, 'gatewayPayment'])->middleware('auth');
+    Route::get('success', [TransactionController::class, 'paymentSuccess'])->middleware('auth');
+    Route::get('cancel', [TransactionController::class, 'paymentFail'])->middleware('auth');
 });

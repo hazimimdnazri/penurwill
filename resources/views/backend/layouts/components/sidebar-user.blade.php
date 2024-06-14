@@ -17,12 +17,22 @@
 					<i class="link-icon" data-feather="home"></i>
 					<span class="link-title">Dashboard</span>
 				</a>
+			</li>
+			@if(auth()->user()->r_will)
 			<li id="mn-will" class="nav-item my-1">
 				<a href="{{ url('client/my-will') }}" class="nav-link">
 					<i class="link-icon" data-feather="clipboard"></i>
 					<span class="link-title">Will</span>
 				</a>
 			</li>
+			@else
+			<li id="mn-will" class="nav-item my-1">
+				<a href="javascript:void(0)" onClick="modalWill()" class="nav-link">
+					<i class="link-icon" data-feather="clipboard"></i>
+					<span class="link-title">Will</span>
+				</a>
+			</li>
+			@endif
 			<li class="nav-item nav-category">Management</li>
 			<li class="nav-item my-1">
 				<a href="javascript:void(0)" onClick="modalPassword()" class="nav-link">
