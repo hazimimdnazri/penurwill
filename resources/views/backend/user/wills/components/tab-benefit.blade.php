@@ -99,6 +99,6 @@
 
     next = () => {
         runLoader('load')
-        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=dnl') }}");
+        location.replace("{{ url('client/my-will/'.auth()->user()->r_will->id.'?tab=testament') }}");
     }
 </script>
