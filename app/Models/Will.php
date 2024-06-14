@@ -22,4 +22,24 @@ class Will extends Model
     public function r_estates(){
         return $this->hasMany(WillRealEstate::class, 'will_id');
     }
+
+    public function r_investments(){
+        return $this->hasMany(WillInvestment::class, 'will_id');
+    }
+
+    public function r_debts(){
+        return $this->hasMany(WillDebt::class, 'will_id');
+    }
+
+    public function r_banks(){
+        return $this->hasMany(WillBank::class, 'will_id');
+    }
+
+    public function r_jewelries(){
+        return $this->hasMany(WillJewelry::class, 'will_id');
+    }
+
+    public function r_others(){
+        return $this->hasMany(WillOtherProperty::class, 'will_id');
+    }
 }

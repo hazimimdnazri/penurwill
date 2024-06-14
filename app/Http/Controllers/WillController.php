@@ -469,8 +469,9 @@ class WillController extends Controller
     }
 
     public function modalDebt(Request $request){
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
         $debt = isset($request->id) ? WillDebt::findorfail($request->id) : new WillDebt;
-        return view('backend.user.wills.components.modal-debt', compact('debt'));
+        return view('backend.user.wills.components.modal-debt', compact('debt', 'beneficiaries'));
     }
 
     public function storeDebt(Request $request){
@@ -479,6 +480,15 @@ class WillController extends Controller
         $debt->name = strtoupper($request->name);
         $debt->remark = strtoupper($request->remark);
         $debt->amount = $request->amount;
+
+        if($this->validateBeneficiary($request)['status'] == 'error'){
+            return [
+                'status' => 'error',
+                'message' => 'Please insert beneficiary information.'
+            ];
+        } else {
+            $debt->beneficiaries = $this->validateBeneficiary($request)['data'];
+        }
 
         if($debt->save()){
             return [
