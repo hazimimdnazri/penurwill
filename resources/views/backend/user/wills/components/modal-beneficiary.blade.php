@@ -11,11 +11,15 @@
                         <label class="form-label">Beneficiary Name <span class="text-danger">*</span></label>
                         <input type="text" style="text-transform: uppercase" name="name" class="form-control" value="{{ $beneficiary->name }}" required>
                     </div>
-                    <div class="col-md-6 needs-validation">
+                    <div class="col-md-4 needs-validation">
                         <label class="form-label">Beneficairy I.C Number <span class="text-danger">*</span></label>
                         <input type="text" onInput="this.value = this.value.replace(/(\D+)/g, '')" maxlength="12" class="form-control" value="{{ $beneficiary->ic }}" name="ic" required>
                     </div>
-                    <div class="col-md-6 needs-validation">
+                    <div class="col-md-4 needs-validation">
+                        <label class="form-label">Beneficiary Relationship <span class="text-danger">*</span></label>
+                        <input type="text" style="text-transform: uppercase" name="relationship" class="form-control" value="{{ $beneficiary->relationship }}" required>
+                    </div>
+                    <div class="col-md-4 needs-validation">
                         <label class="form-label">Mobile Phone <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text" id="basic-addon1">+60</span>

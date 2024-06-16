@@ -22,6 +22,7 @@ use App\Models\WillExecutor;
 use App\Models\WillWitness;
 use App\Models\WillDebt;
 use App\Models\WillBenefit;
+use App\Models\WillGuardian;
 use App\Models\WillTestament;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -83,6 +84,11 @@ class WillController extends Controller
             case 'testament':                
                 $testament = WillTestament::where('will_id', auth()->user()->r_will->id)->first() ?? new WillTestament;
                 return view('backend.user.wills.components.tab-'.$request->tab, compact('testament'));
+                break;
+            
+            case 'guardian':                
+                $guardians = WillGuardian::where('will_id', auth()->user()->r_will->id)->get();
+                return view('backend.user.wills.components.tab-'.$request->tab, compact('guardians'));
                 break;
             
             case 'executor':                
@@ -167,6 +173,7 @@ class WillController extends Controller
         $beneficiary->zipcode = $request->zipcode;
         $beneficiary->city = strtoupper($request->city);
         $beneficiary->state_id = $request->state_id;
+        $beneficiary->relationship = $request->relationship;
 
         if($beneficiary->save()){
             return [
@@ -568,6 +575,35 @@ class WillController extends Controller
             return [
                 'status' => 'success',
                 'message' => 'Executor information has been saved.'
+            ];
+        }
+    }
+
+    public function modalGuardian(Request $request){
+        $states = LState::all();
+        $beneficiaries = WillBeneficiary::where('will_id', auth()->user()->r_will->id)->get();
+        $guardian = isset($request->id) ? WillGuardian::findorfail($request->id) : new WillGuardian;
+        return view('backend.user.wills.components.modal-guardian', compact('states', 'guardian', 'beneficiaries'));
+    }
+
+    public function storeGuardian(Request $request){
+        $guardian = isset($request->id) ? WillGuardian::findorfail($request->id) : new WillGuardian;
+        $guardian->name = strtoupper($request->name);
+        $guardian->ic = $request->ic;
+        $guardian->phone_mobile = $request->phone_mobile;
+        $guardian->phone_office = $request->phone_office;
+        $guardian->address_1 = strtoupper($request->address_1);
+        $guardian->address_2 = strtoupper($request->address_2);
+        $guardian->address_3 = strtoupper($request->address_3);
+        $guardian->city = strtoupper($request->city);
+        $guardian->zipcode = $request->zipcode;
+        $guardian->state_id = $request->state_id;
+        $guardian->will_id = auth()->user()->r_will->id;
+
+        if($guardian->save()){
+            return [
+                'status' => 'success',
+                'message' => 'Guardian information has been saved.'
             ];
         }
     }

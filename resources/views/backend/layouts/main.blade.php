@@ -113,6 +113,7 @@
 			}).done((response) => {
 				$("#variable_main").html(response)
 				$('#modal-create').modal('show')
+				feather.replace()
 				closeLoader()
 			});
 		}

@@ -89,6 +89,8 @@ Route::group(['middleware' => ['auth', 'role: 1'], 'prefix' => 'client'], functi
             Route::post('modal-benefit', [WillController::class, 'modalBenefit']);
             Route::post('store-benefit', [WillController::class, 'storeBenefit']);
             Route::post('store-testament', [WillController::class, 'storeTestament']);
+            Route::post('modal-guardian', [WillController::class, 'modalGuardian']);
+            Route::post('store-guardian', [WillController::class, 'storeGuardian']);
             Route::post('modal-executor', [WillController::class, 'modalExecutor']);
             Route::post('store-executor', [WillController::class, 'storeExecutor']);
             Route::post('store-witness', [WillController::class, 'storeWitness']);

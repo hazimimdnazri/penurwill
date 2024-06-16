@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('wills', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('user_id');
-            $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('status')->default(0); // 0 - Unpaid | 1 -> Paid; 
             $table->string('remark')->nullable();
             $table->enum('flag', [0, 1])->default(1);
+            $table->boolean('isLocked')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

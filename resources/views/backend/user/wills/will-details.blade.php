@@ -36,6 +36,9 @@
 							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'testament' ? 'active' : NULL) : NULL }}" href="?tab=testament" aria-selected="false">Last Testament</a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'guardian' ? 'active' : NULL) : NULL }}" href="?tab=guardian" aria-selected="false">Guardians</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link {{ isset($_GET['tab']) ? ($_GET['tab'] == 'executor' ? 'active' : NULL) : NULL }}" href="?tab=executor" aria-selected="false">Executors</a>
 						</li>
 						<li class="nav-item">
